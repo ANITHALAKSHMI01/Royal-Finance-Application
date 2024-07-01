@@ -9,6 +9,7 @@ public class User
 	private String email;
 	private String password;
 	private String location;
+	private int status;
 	public User()
 	{
 		
@@ -88,11 +89,19 @@ public class User
 	{
 		this.location = location;
 	}
+	public int getStatus() 
+	{
+		return status;
+	}
+	public void setStatus(int status)
+	{
+		this.status = status;
+	}
 	@Override
 	public String toString() 
 	{
-		return "LoanApp [id=" + id + ", name=" + name + ", role=" + role + ", dateOfBirth=" + dateOfBirth
-				+ ", phoneNo=" + phoneNo + ", email=" + email + ", password=" + password + ", location=" + location
-				+ "]";
-	}
+		return "User [id=" + id + ", name=" + name + ", role=" + role + ", dateOfBirth=" + dateOfBirth + ", phoneNo="
+				+ phoneNo + ", email=" + email + ", password=" + password + ", location=" + location + ", status="
+				+ status + "]";
+	}	
 }
