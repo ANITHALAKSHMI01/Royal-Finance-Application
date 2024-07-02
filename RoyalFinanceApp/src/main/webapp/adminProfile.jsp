@@ -132,7 +132,7 @@
 <label>Phone Number</label> <p> <%= user.getPhoneNo() %></p><br><br>
 <label>Email Id  </label><p><%= user.getEmail() %></p><br><br>
 <label>Location  </label><p><%= user.getLocation()%></p><br><br>
-<form action="updateAdmin.jsp">
+<form action="updateUser.jsp">
 <input type="hidden" name="id" value="<%= user.getId() %>">
 <input type="hidden" name="name" value="<%= user.getName() %>">
 <input type="hidden" name="email" value="<%= user.getEmail() %>">

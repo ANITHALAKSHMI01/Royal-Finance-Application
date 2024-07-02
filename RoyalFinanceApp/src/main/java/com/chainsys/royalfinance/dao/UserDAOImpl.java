@@ -3,14 +3,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.chainsys.royalfinance.mapper.EmailMapper;
+import com.chainsys.royalfinance.mapper.FindUserIdMapper;
 import com.chainsys.royalfinance.mapper.UserMapper;
 import com.chainsys.royalfinance.model.User;
+
+import jakarta.servlet.http.HttpSession;
 @Repository
 public class UserDAOImpl implements UserDAO
 {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	UserMapper mapper;
+	FindUserIdMapper userMapper;
+	
 	
 	@Override
 	public void saveUser(User user)
@@ -43,11 +50,14 @@ public class UserDAOImpl implements UserDAO
 		jdbcTemplate.update(update,params);
 	}
 	@Override
-	public String getId(User user)
+	public String getId(User user,HttpSession session) 
 	{
+		String email=(String) session.getAttribute("emailId");
+		user.setEmail(email);
+		user.setStatus(0);
 		String select="select id from user where email=? && status=? ";
 		Object[] params= {user.getEmail(),user.getStatus()};
-		String id=jdbcTemplate.queryForObject(select,String.class, params);
+		String id=jdbcTemplate.queryForObject(select,new FindUserIdMapper(), params);
 		return id;
 	}
 	@Override
@@ -65,4 +75,16 @@ public class UserDAOImpl implements UserDAO
 		Object[] params= {user.getPhoneNo(),user.getLocation(),user.getId()};
 		jdbcTemplate.update(update,params);
 	}
+//	@Override
+//	public  List<String> getEmail()
+//	{
+//		User user=new User();
+//		user.setStatus(0);
+//		String select="select email from user where status=? ";
+//		Object[] params= {user.getStatus()};
+//		List<List> email=jdbcTemplate.query(select, new EmailMapper(),params);
+//		System.out.println(email);
+//		return email;
+//	}
+	
 }

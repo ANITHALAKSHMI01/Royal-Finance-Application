@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.chainsys.royalfinance.dao.UserDAO;
 import com.chainsys.royalfinance.model.User;
-
 import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController
@@ -49,11 +48,13 @@ public class UserController
 		if(password.equals("Ad101@") && emailId.equals("anitha@admin.com"))
 		{
 			session.setAttribute("emailId",emailId);
+			session.setAttribute("id",userDAO.getId(user, session));
 			return "adminHomePage.jsp";
 		}
 		else if(password.equals(checkPassword))
 		{
 			session.setAttribute("emailId",emailId);
+			session.setAttribute("id",userDAO.getId(user, session));
 			return "borrowerHomePage.jsp";
 		}
 		else
@@ -65,12 +66,9 @@ public class UserController
 	public String getUserById(HttpSession session,Model model)
 	{
 		User user=new User();
-		String email=(String) session.getAttribute("emailId");
-		user.setEmail(email);
-		user.setStatus(0);
-		String id=userDAO.getId(user);
+		String id=(String) session.getAttribute("id");
 		user.setId(id);
-		if(id.equals("Ani65") && email.equals("anitha@admin.com"))
+		if(id.equals("Ani65"))
 		{
 			List<User> userDetail=userDAO.getUserDetail(user);
 			model.addAttribute("userDetail",userDetail);
@@ -83,7 +81,7 @@ public class UserController
 			return "borrowerProfile.jsp";
 		}
 	}
-	@GetMapping("/updateAdminDetails")
+	@GetMapping("/updateUserDetails")
 	public String updateAdminDetail(@RequestParam("id") String id,@RequestParam("name") String name,@RequestParam("phoneNo") Long phoneNo,@RequestParam("location") String location,Model model)
 	{
 		User user=new User();
@@ -93,7 +91,14 @@ public class UserController
 		userDAO.updateUser(user);
 		List<User> userDetail=userDAO.getUserDetail(user);
 		model.addAttribute("userDetail",userDetail);
-		return "adminProfile.jsp";
+		if(id.equals("Ani65"))
+		{
+			return "adminProfile.jsp";
+		}
+		else
+		{
+			return "borrowerProfile.jsp";
+		}
 	}
 	@GetMapping("/listAllUsers")
 	public String listAllUsers(Model model)
