@@ -129,7 +129,7 @@ main
 				<a href="listAllUsers" style="color: transparent;"><p style="color:white; font-size:22px;">Registered Borrowers</p></a>
 			</aside>
 			<aside>
-				<a href="" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
+				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
 				<a href="" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>

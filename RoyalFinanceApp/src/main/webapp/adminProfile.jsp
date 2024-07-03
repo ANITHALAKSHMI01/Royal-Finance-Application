@@ -110,19 +110,21 @@
 				<a href="listAllUsers" style="color: transparent;"><p style="color:white; font-size:22px;">Registered Borrowers</p></a>
 			</aside>
 			<aside>
-				<a href="" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
+				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
-				<a href="" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
+				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
-				<a href="LogoutServlet" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
+				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
 			</aside>
 		</section>
 	</nav>
 <div>
  <%
  List<User> userDetail=(ArrayList<User>)request.getAttribute("userDetail");
+ if (userDetail != null && !userDetail.isEmpty())
+ {
  	  for(User user: userDetail)
  	  {
  %>
@@ -139,8 +141,15 @@
 <button>Edit</button>
 </form>
 <%
-           }
-           %>
+			   }
+			  } 
+				else 
+				{
+	        %>
+	            <p>No Records found</p>
+	         <%
+	        }
+	        %>
 <a href="adminHomePage.jsp"><button class="but1">Back</button></a>
 </div>
 </body>

@@ -15,6 +15,10 @@
     padding: 0;
     margin: 0;
 }
+body
+{
+	 overflow-x:hidden;
+}
 #navbar
 {
    border: 2px solid #00008B; 
@@ -102,6 +106,17 @@ table
 	color:white;
 	font-size:15px;
 }
+.search
+{
+	position: relative;
+	top:130px;
+	left: 550px;
+}
+.but1
+{
+    position: relative;
+	top:230px;
+}
 </style>
 </head>
 <body>
@@ -111,23 +126,26 @@ table
 		</section>
 		<section id="right_nav">
 			<aside>
-				<a href="" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Profile<p></a>
+				<a href="userDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Profile<p></a>
 			</aside>
 			<aside>
-				<a href="listAllUsers" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Registered Borrowers</p></a>
+				<a href="listAllUsers" style="color: transparent;"><p style="color:white; font-size:22px;">Registered Borrowers</p></a>
 			</aside>
 			<aside>
-				<a href="" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
+				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
-				<a href="" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
+				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
-				<a href="LogoutServlet" method="get"style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
+				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
 			</aside>
 		</section>
 	</nav>
-<h1>Registered Borrowers</h1>
+<h1>Registered Borrowers</h1><br><br><br><br>
+<form action="/searchUser" method="get" class="search">
+	<input type="search" name="searchData" placeholder="Search">
+</form>
  <table border="1px" cellspacing="0px">
 	<thead>
 		<tr>
@@ -143,6 +161,8 @@ table
 	<tbody>
 	  <%
 	  List<User> users=(ArrayList<User>)request.getAttribute("users");
+	  if (users != null && !users.isEmpty())
+	  {
 	  	  for(User user: users)
 	  	  {
 	  %>
@@ -161,8 +181,17 @@ table
           </td> 
 	  </tr>
 	   <%
-           }
-           %>
+			   }
+			  } 
+				else 
+				{
+	        %>
+	        <tr>
+	            <td colspan="15">No Records found</td>
+	        </tr>
+	         <%
+	        }
+	        %>
 	</tbody>
 </table> 
 <a href="adminHomePage.jsp"><button class="but1">Back</button></a>

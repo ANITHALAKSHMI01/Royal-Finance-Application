@@ -1,5 +1,5 @@
 package com.chainsys.royalfinance.model;
-public class LoanDetails 
+public class Loan 
 {
 	private int loanId;
 	private String borrowerId;
@@ -12,7 +12,7 @@ public class LoanDetails
 	private int status;
 	private String dueDate;
 	private String paymentStatus;
-	public LoanDetails(String borrowerId,int loanId,int loanAmount,String date,int reduction,int interest,int tenure,int distribusalAmount)
+	public Loan(String borrowerId,int loanId,int loanAmount,String date,int reduction,int interest,int tenure,int distribusalAmount)
 	{
 		this.borrowerId=borrowerId;
 		this.loanId=loanId;
@@ -23,7 +23,7 @@ public class LoanDetails
 		this.tenure=tenure;
 		this.distribusalAmount=distribusalAmount;
 	}
-	public LoanDetails()
+	public Loan()
 	{
 		
 	}

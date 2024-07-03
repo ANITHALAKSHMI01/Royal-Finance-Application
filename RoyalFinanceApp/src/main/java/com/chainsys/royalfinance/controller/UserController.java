@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.chainsys.royalfinance.dao.UserDAO;
 import com.chainsys.royalfinance.model.User;
+import com.chainsys.royalfinance.validation.Validation;
+
 import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController
 {
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	Validation validation;
 	
 	@RequestMapping("/home")
 	public String home()
@@ -22,11 +26,11 @@ public class UserController
 		return "home.jsp";
 	}
 	@PostMapping("/register")
-	public String register(@RequestParam("name") String name,@RequestParam("dateOfBirth") String dateOfBirth,@RequestParam("phoneNo") Long phoneNo,@RequestParam("emailId") String emailId,@RequestParam("password") String password,@RequestParam("location") String location)
+	public String register(@RequestParam("name") String name,@RequestParam("dateOfBirth") String dateOfBirth,@RequestParam("phoneNo") Long phoneNo,@RequestParam("emailId") String emailId,@RequestParam("password") String password,@RequestParam("location") String location,Model model)
 	{
 		User user=new User();
 		String phoneNumber=phoneNo.toString();
-		String id=name.substring(1,4)+phoneNumber.substring(3,5);
+		String id=name.substring(2,5)+phoneNumber.substring(4,6);
 		user.setId(id);
 		user.setName(name);
 		user.setDateOfBirth(dateOfBirth);
@@ -35,27 +39,54 @@ public class UserController
 		user.setPhoneNo(phoneNo);
 		user.setLocation(location);
 		user.setRole("Borrower");
-		userDAO.saveUser(user);
-		return "registrationSuccess.jsp";
+		List<User> userDetail=userDAO.checkUserDetails(emailId);
+		if(!userDetail.isEmpty() || Boolean.FALSE.equals(validation.checkName(name,model)) || Boolean.FALSE.equals(validation.checkEmail(emailId,model)) || Boolean.FALSE.equals(validation.checkPhoneNo(phoneNumber,model)) || Boolean.FALSE.equals(validation.checkPassword(password,model)))
+		{
+			User existingUser = userDetail.get(0);
+			if(emailId.equals(existingUser.getEmail()) && password.equals(existingUser.getPassword()) )
+			{
+				return "userRegistration.jsp";
+			}
+			else if(emailId.equals(existingUser.getEmail()) || password.equals(existingUser.getPassword()))
+			{
+				return "userRegistration.jsp";
+			}
+			else
+			{
+				userDAO.saveUser(user);
+				return "registrationSuccess.jsp";
+			}
+		}
+		else
+		{
+			userDAO.saveUser(user);
+			return "registrationSuccess.jsp";
+		}
+		
 	}
 	@PostMapping("/login")
-	public String login(@RequestParam("emailId") String emailId,@RequestParam("password") String password,HttpSession session)
+	public String login(@RequestParam("emailId") String emailId,@RequestParam("password") String password,HttpSession session,Model model)
 	{
-		User user=new User();
-		user.setEmail(emailId);
-		user.setStatus(0);
-		String checkPassword=userDAO.checkUser(user);
-		if(password.equals("Ad101@") && emailId.equals("anitha@admin.com"))
+		List<User> userDetail=userDAO.checkUserDetails(emailId);
+		if(userDetail!=null || Boolean.FALSE.equals(validation.checkEmail(emailId,model)) || Boolean.FALSE.equals(validation.checkPassword(password,model)))
 		{
-			session.setAttribute("emailId",emailId);
-			session.setAttribute("id",userDAO.getId(user, session));
-			return "adminHomePage.jsp";
-		}
-		else if(password.equals(checkPassword))
-		{
-			session.setAttribute("emailId",emailId);
-			session.setAttribute("id",userDAO.getId(user, session));
-			return "borrowerHomePage.jsp";
+			User existingUser = userDetail.get(0);
+			if(password.equals("Ad101@") && emailId.equals("anitha@admin.com"))
+			{
+				session.setAttribute("emailId",emailId);
+				session.setAttribute("id",userDAO.getId(session));
+				return "adminHomePage.jsp";
+			}
+			else if(emailId.equals(existingUser.getEmail()) && password.equals(existingUser.getPassword()))
+			{
+				session.setAttribute("emailId",emailId);
+				session.setAttribute("id",userDAO.getId(session));
+				return "borrowerHomePage.jsp";
+			}
+			else
+			{
+				return "login.jsp";
+			}
 		}
 		else
 		{
@@ -65,18 +96,16 @@ public class UserController
 	@GetMapping("/userDetail")
 	public String getUserById(HttpSession session,Model model)
 	{
-		User user=new User();
 		String id=(String) session.getAttribute("id");
-		user.setId(id);
 		if(id.equals("Ani65"))
 		{
-			List<User> userDetail=userDAO.getUserDetail(user);
+			List<User> userDetail=userDAO.getUserDetail(id);
 			model.addAttribute("userDetail",userDetail);
 			return "adminProfile.jsp";
 		}
 		else
 		{
-			List<User> userDetail=userDAO.getUserDetail(user);
+			List<User> userDetail=userDAO.getUserDetail(id);
 			model.addAttribute("userDetail",userDetail);
 			return "borrowerProfile.jsp";
 		}
@@ -84,12 +113,8 @@ public class UserController
 	@GetMapping("/updateUserDetails")
 	public String updateAdminDetail(@RequestParam("id") String id,@RequestParam("name") String name,@RequestParam("phoneNo") Long phoneNo,@RequestParam("location") String location,Model model)
 	{
-		User user=new User();
-		user.setId(id);
-		user.setPhoneNo(phoneNo);
-		user.setLocation(location);
-		userDAO.updateUser(user);
-		List<User> userDetail=userDAO.getUserDetail(user);
+		userDAO.updateUser(id,phoneNo,location);
+		List<User> userDetail=userDAO.getUserDetail(id);
 		model.addAttribute("userDetail",userDetail);
 		if(id.equals("Ani65"))
 		{
@@ -103,24 +128,25 @@ public class UserController
 	@GetMapping("/listAllUsers")
 	public String listAllUsers(Model model)
 	{
-		User user=new User();
-		user.setRole("Borrower");
-		List<User> users=userDAO.getAllUsers(user);
+		String role="Borrower";
+		List<User> users=userDAO.getAllUsers(role);
 		model.addAttribute("users",users);
 		return "registeredUsers.jsp";
 	}
 	@GetMapping("/removeUser")
 	public String removeUser(@RequestParam("deleteId") String id,Model model)
 	{
-		User user=new User();
-		user.setId(id);
-		user.setStatus(1);
-		userDAO.removeUser(user);
-		user.setRole("Borrower");
-		user.setStatus(0);
-		List<User> users=userDAO.getAllUsers(user);
+		userDAO.removeUser(id);
+		String role="Borrower";
+		List<User> users=userDAO.getAllUsers(role);
 		model.addAttribute("users",users);
 		return "registeredUsers.jsp";
 	}
-	
+	@GetMapping("/searchUser")
+	public String searchUser(@RequestParam("searchData") String search,Model model)
+	{
+		List<User> users=userDAO.searchUser(search);
+		model.addAttribute("users",users);
+		return "registeredUsers.jsp";
+	}
 }

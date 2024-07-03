@@ -1,6 +1,6 @@
 package com.chainsys.royalfinance.model;
 import java.util.Arrays;
-public class BorrowerDetails 
+public class Borrower 
 {
 	private int applicationId;
 	private String borrowerId;
@@ -15,11 +15,11 @@ public class BorrowerDetails
 	private byte[] paySlip;
 	private byte[] proof;
 	private String status;
-	public BorrowerDetails()
+	public Borrower()
 	{
 		
 	}
-	public BorrowerDetails(int applicationId,String borrowerId,int salary,int tenure,String city,String state,int pincode,long accountNo,String pan,byte[] paySlip,byte[] proof,String status)
+	public Borrower(int applicationId,String borrowerId,int salary,int tenure,String city,String state,int pincode,long accountNo,String pan,byte[] paySlip,byte[] proof,String status)
 	{
 		this.applicationId=applicationId;
 		this.borrowerId=borrowerId;
@@ -34,7 +34,7 @@ public class BorrowerDetails
 		this.proof=proof;
 		this.status=status;
 	}
-	public BorrowerDetails(String borrowerId,int salary,int loanAmount,int tenure,String city,String state,int pincode,long accountNo,String pan,byte[] paySlip,byte[] proof,String status)
+	public Borrower(String borrowerId,int salary,int loanAmount,int tenure,String city,String state,int pincode,long accountNo,String pan,byte[] paySlip,byte[] proof,String status)
 	{
 		this.borrowerId=borrowerId;
 		this.salary=salary;

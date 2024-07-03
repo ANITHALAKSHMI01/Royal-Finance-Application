@@ -37,12 +37,20 @@
 	#email
 	{
 		position:relative;
-		left:40px;
+		left:60px;
 	}
 	#pass
 	{
 		position:relative;
 		left:45px;
+	}
+		#loc
+	{
+		position:relative;
+		left:58px;
+		padding:7px;
+		width:214px;
+		font-size:15px;
 	}
 	input
 	{
@@ -107,7 +115,7 @@
 	<label for="pass">Password</label>
 	<input id="pass" type="password" placeholder="Password" name="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@!#$%^&*]).{6}$" maxlength=6 required><br><br>
 	<label for="loc">Location</label>
-	<select name="location" required>
+	<select name="location" id="loc" required>
 		<option>Tenkasi</option>
 		<option>Tirunelveli</option>
 		<option>Madurai</option>

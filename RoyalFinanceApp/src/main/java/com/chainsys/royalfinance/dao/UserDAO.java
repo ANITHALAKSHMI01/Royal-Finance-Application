@@ -1,6 +1,8 @@
 package com.chainsys.royalfinance.dao;
 import java.util.List;
 import org.springframework.stereotype.Repository;
+
+import com.chainsys.royalfinance.model.Borrower;
 import com.chainsys.royalfinance.model.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -8,11 +10,15 @@ import jakarta.servlet.http.HttpSession;
 public interface UserDAO 
 {
 	public void saveUser(User user);
-	public String checkUser(User user);
-	public List<User> getAllUsers(User user);
-	public void removeUser(User user);
-	public String getId(User user,HttpSession session);
-	public List<User> getUserDetail(User user);
-	public void updateUser(User user);
-//	public List<List> getEmail();
+	public List<User> getAllUsers(String role);
+	public void removeUser(String id);
+	public String getId(HttpSession session);
+	public List<User> getUserDetail(String id);
+	public void updateUser(String id,long phoneNo,String location);
+	public List<User> checkUserDetails(String email);
+	public List<User> searchUser(String searchData);
+	public void addAccount(long accountNo,int amount,String id);
+	public void addBorrower(Borrower borrower);
+	public List<Borrower> getAllBorrowers();
+	public List<Borrower> getBorrowerDetail(String id);
 }
