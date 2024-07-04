@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<User> getAllUsers(String role) 
 	{
-		String select="select id,name,date_of_birth,phone_no,email,location from user where status=? and role=?";
+		String select="select id,name,date_of_birth,phone_no,email,location,active from user where status=? and role=?";
 		Object[] params= {0,role};
 		List<User> userList=jdbcTemplate.query(select, new UserMapper(),params);
 		return userList;
@@ -55,7 +55,7 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<User> getUserDetail(String id)
 	{
-		String select="select id,name,date_of_birth,phone_no,email,location from user where status=? and id=?";
+		String select="select id,name,date_of_birth,phone_no,email,location,active from user where status=? and id=?";
 		Object[] params= {0,id};
 		List<User> userList=jdbcTemplate.query(select, new UserMapper(),params);
 		return userList;
@@ -78,7 +78,7 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<User> searchUser(String searchData)
 	{
-		String select=String.format("select id,name,date_of_birth,phone_no,email,location from user where (id like '%%%s%%' or name like '%%%s%%' or email like '%%%s%%' or phone_no like '%%%s%%')  and status=0 and role='Borrower' ",searchData,searchData,searchData,searchData);
+		String select=String.format("select id,name,date_of_birth,phone_no,email,location,active from user where (id like '%%%s%%' or name like '%%%s%%' or email like '%%%s%%' or phone_no like '%%%s%%')  and status=0 and role='Borrower' ",searchData,searchData,searchData,searchData);
 		List<User> userList=jdbcTemplate.query(select, new UserMapper());
 		return userList;
 	}
@@ -99,15 +99,51 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Borrower> getAllBorrowers() 
 	{
-		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status from borrower_details where is_active=0 && is_generate=0";
+		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=0 && is_generate=0";
 		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper());
 		return borrowers;
 	}
 	@Override
 	public List<Borrower> getBorrowerDetail(String id)
 	{
-		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status from borrower_details where is_active=0 && is_generate=0 && borrower_id=?";
-		Object[] params= {id};
+		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=? && is_generate=0 && borrower_id=?";
+		Object[] params= {0,id};
+		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),params);
+		return borrowers;
+	}
+	@Override
+	public void updateUserActive(String id)
+	{
+		String update="update user set active=? where id=?";
+		Object[] params= {1,id};
+		jdbcTemplate.update(update,params);
+	}
+	@Override
+	public int getBorrowerIsActive(String id) 
+	{
+		String select="select is_active from borrower_details where borrower_id=?";
+		int active=jdbcTemplate.queryForObject(select, Integer.class,id);
+		return active;
+	}
+	@Override
+	public List<Borrower> searchBorrower(String searchData) 
+	{
+		String search=String.format("select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where (application_id like '%%%s%%' or borrower_id like '%%%s%%' or status like '%%%s%%') and is_active=0 and is_generate=0",searchData,searchData,searchData);
+		List<Borrower> borrowers=jdbcTemplate.query(search,new BorrowerMapper());
+		return borrowers;
+	}
+	@Override
+	public void updateLoanStatus(int applicationId,String status) 
+	{
+		String update="update borrower_details set status=? where application_id=?";
+		Object[] params= {status,applicationId};
+		jdbcTemplate.update(update,params);
+	}
+	@Override
+	public List<Borrower> getBorrowerByStatus(String status)
+	{
+		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=0 && is_generate=0 && status=?";
+		Object[] params= {status};
 		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),params);
 		return borrowers;
 	}

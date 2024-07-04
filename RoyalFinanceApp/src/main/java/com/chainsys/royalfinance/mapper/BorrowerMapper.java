@@ -23,6 +23,7 @@ public class BorrowerMapper implements RowMapper<Borrower>
 		borrower.setPaySlip(rs.getBytes(11));
 		borrower.setTenure(rs.getInt(12));
 		borrower.setStatus(rs.getString(13));
+		borrower.setIsActive(rs.getInt(14));
 		return borrower;
 	}
 

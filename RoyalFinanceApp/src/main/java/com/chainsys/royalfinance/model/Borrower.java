@@ -15,39 +15,10 @@ public class Borrower
 	private byte[] paySlip;
 	private byte[] proof;
 	private String status;
+	private int isActive;
 	public Borrower()
 	{
 		
-	}
-	public Borrower(int applicationId,String borrowerId,int salary,int tenure,String city,String state,int pincode,long accountNo,String pan,byte[] paySlip,byte[] proof,String status)
-	{
-		this.applicationId=applicationId;
-		this.borrowerId=borrowerId;
-		this.salary=salary;
-		this.tenure=tenure;
-		this.city=city;
-		this.state=state;
-		this.pincode=pincode;
-		this.accountNo=accountNo;
-		this.pan=pan;
-		this.paySlip=paySlip;
-		this.proof=proof;
-		this.status=status;
-	}
-	public Borrower(String borrowerId,int salary,int loanAmount,int tenure,String city,String state,int pincode,long accountNo,String pan,byte[] paySlip,byte[] proof,String status)
-	{
-		this.borrowerId=borrowerId;
-		this.salary=salary;
-		this.loanAmount=loanAmount;
-		this.tenure=tenure;
-		this.city=city;
-		this.state=state;
-		this.pincode=pincode;
-		this.accountNo=accountNo;
-		this.pan=pan;
-		this.paySlip=paySlip;
-		this.proof=proof;
-		this.status=status;
 	}
 	public int getApplicationId()
 	{
@@ -153,12 +124,21 @@ public class Borrower
 	{
 		this.status = status;
 	}
-	@Override
-	public String toString()
+	public int getIsActive()
 	{
-		return "LoanBorrowerDetails [applicationId=" + applicationId + ", borrowerId=" + borrowerId + ", salary="
-				+ salary + ", loanAmount=" + loanAmount + ", tenure=" + tenure + ", city=" + city + ", state=" + state
+		return isActive;
+	}
+	public void setIsActive(int isActive)
+	{
+		this.isActive = isActive;
+	}
+	@Override
+	public String toString() 
+	{
+		return "Borrower [applicationId=" + applicationId + ", borrowerId=" + borrowerId + ", salary=" + salary
+				+ ", loanAmount=" + loanAmount + ", tenure=" + tenure + ", city=" + city + ", state=" + state
 				+ ", pincode=" + pincode + ", accountNo=" + accountNo + ", pan=" + pan + ", paySlip="
-				+ Arrays.toString(paySlip) + ", proof=" + Arrays.toString(proof) + ", status=" + status + "]";
+				+ Arrays.toString(paySlip) + ", proof=" + Arrays.toString(proof) + ", status=" + status + ", isActive="
+				+ isActive + "]";
 	}
 }

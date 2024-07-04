@@ -112,11 +112,6 @@ table
 	top:130px;
 	left: 550px;
 }
-.but1
-{
-    position: relative;
-	top:230px;
-}
 </style>
 </head>
 <body>
@@ -135,10 +130,22 @@ table
 				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
+			<form action="/getBorrowerByStatus" method="get">
+	  			<select name="filter" id="approve">
+				    	<option>Status</option> 
+				      	<option>Approved</option>
+				      	<option>On Progress</option>
+		                <option>Rejected</option>
+	                	<option>Unapproved</option>
+	                 <input type="submit"  value="Filter" class="button1">
+				      </select>
+	 		</form>
+	 		</aside>
+			<aside>
 				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
+				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
 			</aside>
 		</section>
 	</nav>
@@ -194,6 +201,5 @@ table
 	        %>
 	</tbody>
 </table> 
-<a href="adminHomePage.jsp"><button class="but1">Back</button></a>
 </body>
 </html>

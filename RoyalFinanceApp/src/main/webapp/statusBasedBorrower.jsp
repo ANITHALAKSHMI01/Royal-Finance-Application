@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-      <%@ page import="com.chainsys.royalfinance.model.Borrower" %>
+     <%@ page import="com.chainsys.royalfinance.model.Borrower" %>
     <%@ page import="java.util.List" %>
      <%@ page import="java.util.ArrayList" %>
      <%@ page import="java.util.Base64" %>
@@ -10,6 +10,7 @@
 <meta charset="ISO-8859-1">
 <title>Lenders</title>
 </head>
+<style>
 <style>
 *
 {
@@ -57,8 +58,8 @@ button
 		width:100px;
 		padding:5px;
 		position:relative;
-		left:750px;
-		top:70px;
+		left:550px;
+		top:300px;
 		background-color:green;
 		color:white;
 		border-color:green;
@@ -104,17 +105,32 @@ th, td
 #search
 {
 	position:relative;
-	left:550px;
-	top:120px; 
-	padding:5px;
+	left:150px;
+	top:30px;
 }
 #approve
 {
-	padding:3px;
+	padding:10px;
 }
+.delete
+{
+    padding:5px;
+	background-color:red;
+	border-color:red;
+	width:70px;
+	color:white;
+	font-size:15px;
+	position:relative;
+	top:20px;
+}
+ .back
+{
+	position:relative;
+	top:1000px;
+} 
 </style>
 <body>
- <nav id="navbar">
+<nav id="navbar">
 		<section id="left_nav">
 			<img src="images/flogo.jpg" alt="image" id="image1">
 		</section>
@@ -148,10 +164,7 @@ th, td
 			</aside>
 		</section>
 	</nav>
-	<form action="/searchBorrower" method="get">
-		<input type="text" placeholder="Search" id="search" name="searchData">
-	</form>
-<table border="1px" cellspacing="0px">
+	<table border="2px" cellspacing="0px">
 	<thead>
 		<tr>
 	<th>Application Id</th>
@@ -167,8 +180,7 @@ th, td
 	  <th>Pay Slip</th>
 	 <th>Proof</th>
 	 <th>Status</th>
-	<th>Approval</th>
-	<th>Generate Bill</th>
+	 <th>Remove Lender</th>
 	   </tr>
 	</thead>
 	<tbody>
@@ -201,39 +213,24 @@ th, td
 					<form action="/viewPaySlip" method="post">
 						<input type="hidden" name="viewId" value="<%= borrower.getBorrowerId()%>">
 				        <input type="submit" name="view" value="View" class="button">
-					</form> 
+					</form>
 					</td>
 				<td><img src="data:image/jpeg;base64,<%=proof%>"
 					alt="Proof" style="width:200px; height:200px;"><br><br>
-					 <form action="/viewProof" method="post">
+					<form action="/viewProof" method="post">
 						<input type="hidden" name="viewId" value="<%= borrower.getBorrowerId()%>">
 				        <input type="submit" name="view" value="View" class="button">
-					</form> 
+					</form>
 					</td>
-					<td><%=borrower.getStatus() %></td>
-				<td>
-					<form action="/updateStatus" method="get">
+					<td><%=borrower.getStatus()%></td>
+					<td>
+					<form action="" method="get">
+						 <input type="hidden" name="borrowerId" value="<%= borrower.getBorrowerId()%>"> 
 						<input type="hidden" name="id" value="<%= borrower.getApplicationId()%>">
-				      	<select name="approval" id="approve">
-				    	<option>Select</option> 
-				      	<option>Approved</option>
-				      	<option>On Progress</option>
-		                <option>Rejected</option>
-	                	<option>Unapproved</option>
-				      </select>
-				      <input type="submit" name="approve" value="Update" class="button" style="position:relative;top:20px;">
+						 <input type="submit" class="delete" name="delete" value="Delete">
 					</form>
 				</td>
-				<td>
-					<form action=""method="post">
-					   	<input type="hidden" name="borrower" value="<%= borrower.getBorrowerId()%>">
-						<input type="hidden" name="id" value="<%= borrower.getApplicationId()%>">
-						<input type="hidden" name="amount" value="<%=borrower.getLoanAmount()%>">
-						<input type="hidden" name="tenure" value="<%=borrower.getTenure()%>">
-						<input type="submit" name="pay" value="Pay Now" class="button">
-					</form>
-				</td> 
-			<%
+					<%
 			   }
 				  		
 				  }
@@ -247,7 +244,7 @@ th, td
 	        %>
 	        </tr>
 	        <tr>
-	            <td colspan="15">No Records found</td>
+	            <td colspan="14">No Records found</td>
 	        </tr>
 	        <%
 	        }

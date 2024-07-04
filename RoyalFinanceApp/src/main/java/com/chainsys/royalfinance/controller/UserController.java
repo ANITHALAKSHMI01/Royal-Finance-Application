@@ -125,14 +125,6 @@ public class UserController
 			return "borrowerProfile.jsp";
 		}
 	}
-	@GetMapping("/listAllUsers")
-	public String listAllUsers(Model model)
-	{
-		String role="Borrower";
-		List<User> users=userDAO.getAllUsers(role);
-		model.addAttribute("users",users);
-		return "registeredUsers.jsp";
-	}
 	@GetMapping("/removeUser")
 	public String removeUser(@RequestParam("deleteId") String id,Model model)
 	{
@@ -148,5 +140,11 @@ public class UserController
 		List<User> users=userDAO.searchUser(search);
 		model.addAttribute("users",users);
 		return "registeredUsers.jsp";
+	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session)
+	{
+		session.invalidate();
+		return "home.jsp";
 	}
 }

@@ -21,4 +21,9 @@ public interface UserDAO
 	public void addBorrower(Borrower borrower);
 	public List<Borrower> getAllBorrowers();
 	public List<Borrower> getBorrowerDetail(String id);
+	public int getBorrowerIsActive(String id);
+	public void updateUserActive(String id);
+	public List<Borrower> searchBorrower(String searchData);
+	public void updateLoanStatus(int applicationId,String status);
+	public List<Borrower> getBorrowerByStatus(String status);
 }

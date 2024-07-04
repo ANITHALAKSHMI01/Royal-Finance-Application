@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.chainsys.royalfinance.dao.UserDAO;
 import com.chainsys.royalfinance.model.Borrower;
+import com.chainsys.royalfinance.model.User;
 import com.chainsys.royalfinance.validation.Validation;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,10 +42,11 @@ public class BorrowerController
 			borrower.setPan(pan);
 			borrower.setPaySlip(slip);
 			borrower.setProof(proofImage);
-			borrower.setStatus("UnApproved");
+			borrower.setStatus("Unapproved");
 			int amount=1000;
 			userDAO.addBorrower(borrower);
 			userDAO.addAccount(accountNo,amount , id);
+			userDAO.updateUserActive(id);
 			return "applicationSuccess.jsp" ;
 		}
 		else
@@ -60,4 +62,27 @@ public class BorrowerController
 		model.addAttribute("borrowers",borrowers);
 		return "appliedLoanDetails.jsp";
 	}
+	@GetMapping("/allowBorrower")
+	public String allowBorrower(HttpSession session)
+	{
+		String id=(String) session.getAttribute("id");
+		List<User> user=userDAO.getUserDetail(id);
+		if(user!=null)
+		{
+			User existingUser=user.get(0);
+			if(existingUser.getActive()==0)
+			{
+				return "loanApplication.jsp";
+			}
+			else
+			{
+				return "alreadyAppliedLoan.jsp";
+			}
+		}
+		else
+		{
+			return "loanApplication.jsp";
+		}
+	}
+	
 }

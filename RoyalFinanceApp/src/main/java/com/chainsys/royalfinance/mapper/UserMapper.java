@@ -21,6 +21,7 @@ public class UserMapper implements RowMapper<User>
 		user.setDateOfBirth(dateOfBirth);
 		user.setEmail(email);
 		user.setLocation(location);
+		user.setActive(rs.getInt(7));
 		return user;
 	}
 

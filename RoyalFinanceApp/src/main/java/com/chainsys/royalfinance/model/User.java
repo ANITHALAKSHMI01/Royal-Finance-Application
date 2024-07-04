@@ -10,6 +10,7 @@ public class User
 	private String password;
 	private String location;
 	private int status;
+	private int active;
 	public User()
 	{
 		
@@ -97,11 +98,19 @@ public class User
 	{
 		this.status = status;
 	}
+	public int getActive() 
+	{
+		return active;
+	}
+	public void setActive(int active) 
+	{
+		this.active = active;
+	}
 	@Override
-	public String toString() 
+	public String toString()
 	{
 		return "User [id=" + id + ", name=" + name + ", role=" + role + ", dateOfBirth=" + dateOfBirth + ", phoneNo="
 				+ phoneNo + ", email=" + email + ", password=" + password + ", location=" + location + ", status="
-				+ status + "]";
-	}	
+				+ status + ", active=" + active + "]";
+	}
 }

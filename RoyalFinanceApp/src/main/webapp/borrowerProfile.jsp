@@ -119,7 +119,7 @@
 				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
 			</aside>
 			<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
+				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
 			</aside>
 		</section>
 	</nav>
