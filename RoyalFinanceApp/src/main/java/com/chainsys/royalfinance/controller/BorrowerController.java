@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.chainsys.royalfinance.dao.UserDAO;
 import com.chainsys.royalfinance.model.Borrower;
+import com.chainsys.royalfinance.model.Loan;
 import com.chainsys.royalfinance.model.User;
 import com.chainsys.royalfinance.validation.Validation;
 
@@ -84,5 +85,12 @@ public class BorrowerController
 			return "loanApplication.jsp";
 		}
 	}
-	
+	@GetMapping("/getReceipt")
+	public String getReceipt(Model model,HttpSession session)
+	{
+		String borrowerId=(String) session.getAttribute("id");
+		List<Loan> loanDetail=userDAO.getApprovedLoan(borrowerId);
+		model.addAttribute("loan",loanDetail);
+		return "loanReceipt.jsp";
+	}
 }

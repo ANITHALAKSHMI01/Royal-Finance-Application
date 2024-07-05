@@ -1,4 +1,6 @@
 package com.chainsys.royalfinance.controller;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.royalfinance.dao.UserDAO;
 import com.chainsys.royalfinance.model.Borrower;
+import com.chainsys.royalfinance.model.Loan;
 import com.chainsys.royalfinance.model.User;
 @Controller
 public class AdminController 
@@ -66,5 +69,74 @@ public class AdminController
 		List<Borrower> borrowers=userDAO.getBorrowerByStatus(status);
 		model.addAttribute("borrowers",borrowers);
 		return "statusBasedBorrower.jsp";
+	}
+	@PostMapping("/giveLoan")
+	public String giveLoan(@RequestParam("id") String borrowerId,@RequestParam("applicationId") int applicationId,@RequestParam("amount") int loanAmount,@RequestParam("tenure") int tenure,Model model)
+	{
+		Borrower borrower1=null;
+		LocalDate dateToday = LocalDate.now(); 
+		String dateString =dateToday.toString();
+		int reduction=(loanAmount*10)/100;
+		int distribusalAmount=loanAmount-reduction;
+		Loan loan=new Loan(borrowerId,dateString,reduction,10,tenure,distribusalAmount);
+		List<Borrower> borrower=userDAO.getBorrowerDetail(borrowerId);
+		if(!borrower.isEmpty())
+		{
+			borrower1=borrower.get(0);
+		}
+		if(borrower1.getStatus().equals("Approved"))
+		{
+			userDAO.giveLoan(loan);
+			List<Loan> loanDetail=userDAO.getApprovedLoan(borrowerId);
+			model.addAttribute("loan",loanDetail);
+			return "loan.jsp";
+		}
+		else
+		{
+			List<Borrower> borrowers=userDAO.getAllBorrowers();
+			model.addAttribute("borrowers",borrowers);
+			return "lenders.jsp";
+		}
+	}
+	@GetMapping("/getAllLoans")
+	public String getAllLoans(Model model)
+	{
+		List<Loan> loans=userDAO.getAllLoans();
+		model.addAttribute("loans",loans);
+		return "loanDetails.jsp";
+	}
+	@PostMapping("/getLoanDetail")
+	public String getLoanDetail(@RequestParam("id") String borrowerId,@RequestParam("loanId") int loanId,@RequestParam("amount") int amount,Model model)
+	{
+		Borrower borrower=null;
+		List<Loan> list=new ArrayList<>();
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(borrowerId);
+		if(!borrowers.isEmpty())
+		{
+			borrower=borrowers.get(0);
+		}
+		Loan loan=new Loan();
+		loan.setAccountNo(borrower.getAccountNo());
+		loan.setBorrowerId(borrowerId);
+		loan.setLoanId(loanId);
+		loan.setLoanAmount(amount);
+		list.add(loan);
+		model.addAttribute("list",list);
+		return "payLoan.jsp";
+	}
+	@PostMapping("/payLoan")
+	public String payLoan(@RequestParam("id") String borrowerId,@RequestParam("account") long accountNo,@RequestParam("amount") int amount,Model model)
+	{
+		long adminAccountNo=6754321890765l;
+		userDAO.updateBillStatus(borrowerId);
+		int adminTotalBalance=userDAO.getTotalBalance(adminAccountNo);
+		int borrowerTotalBalance=userDAO.getTotalBalance(accountNo);
+		int balance=adminTotalBalance-amount;
+		int creditAmount=borrowerTotalBalance+amount;
+		userDAO.updateBalance(adminAccountNo, balance);
+		userDAO.updateBalance(accountNo, creditAmount);
+		List<Borrower> borrowers=userDAO.getAllBorrowers();
+		model.addAttribute("borrowers",borrowers);
+		return "lenders.jsp";
 	}
 }

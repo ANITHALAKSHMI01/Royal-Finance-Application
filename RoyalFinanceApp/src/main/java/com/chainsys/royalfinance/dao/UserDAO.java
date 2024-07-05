@@ -3,6 +3,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.chainsys.royalfinance.model.Borrower;
+import com.chainsys.royalfinance.model.Loan;
 import com.chainsys.royalfinance.model.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,4 +27,10 @@ public interface UserDAO
 	public List<Borrower> searchBorrower(String searchData);
 	public void updateLoanStatus(int applicationId,String status);
 	public List<Borrower> getBorrowerByStatus(String status);
+	public void giveLoan(Loan loan);
+	public List<Loan> getApprovedLoan(String id);
+	public List<Loan> getAllLoans();
+	public void updateBillStatus(String id);
+	public int getTotalBalance(long accountNo);
+	public void updateBalance(long accountNo,int amount);
 }

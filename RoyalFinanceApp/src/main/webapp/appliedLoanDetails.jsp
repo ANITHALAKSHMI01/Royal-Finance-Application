@@ -117,13 +117,13 @@ th, td
 				<a href="userDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Profile<p></a>
 			</aside>
 			<aside>
-				<a href="loanApplication.jsp" style="color: transparent;"><p style="color:white; font-size:22px;">Apply</p></a>
+				<a href="allowBorrower" style="color: transparent;"><p style="color:white; font-size:22px;">Apply</p></a>
 			</aside>
 			<aside>
 				<a href="appliedLoanDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Status</p></a>
 			</aside>
 			<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
+				<a href="getReceipt" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
 			</aside>
 				<aside>
 				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>

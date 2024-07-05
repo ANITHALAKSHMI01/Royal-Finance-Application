@@ -9,14 +9,13 @@ public class Loan
 	private int interest;
 	private int tenure;
 	private int distribusalAmount;
+	private long accountNo;
 	private int status;
 	private String dueDate;
 	private String paymentStatus;
-	public Loan(String borrowerId,int loanId,int loanAmount,String date,int reduction,int interest,int tenure,int distribusalAmount)
+	public Loan(String borrowerId,String date,int reduction,int interest,int tenure,int distribusalAmount)
 	{
 		this.borrowerId=borrowerId;
-		this.loanId=loanId;
-		this.loanAmount=loanAmount;
 		this.date=date;
 		this.reduction=reduction;
 		this.interest=interest;
@@ -91,6 +90,14 @@ public class Loan
 	{
 		this.reduction = reduction;
 	}
+	public long getAccountNo() 
+	{
+		return accountNo;
+	}
+	public void setAccountNo(long accountNo)
+	{
+		this.accountNo = accountNo;
+	}
 	public int getStatus() 
 	{
 		return status;
@@ -116,11 +123,11 @@ public class Loan
 		this.paymentStatus = paymentStatus;
 	}
 	@Override
-	public String toString()
+	public String toString() 
 	{
-		return "AmountDetails [loanId=" + loanId + ", borrowerId=" + borrowerId + ", loanAmount=" + loanAmount
-				+ ", reduction=" + reduction + ", date=" + date + ", interest=" + interest + ", tenure=" + tenure
-				+ ", distribusalAmount=" + distribusalAmount + ", status=" + status + ", dueDate=" + dueDate
-				+ ", paymentStatus=" + paymentStatus + "]";
+		return "Loan [loanId=" + loanId + ", borrowerId=" + borrowerId + ", loanAmount=" + loanAmount + ", reduction="
+				+ reduction + ", date=" + date + ", interest=" + interest + ", tenure=" + tenure
+				+ ", distribusalAmount=" + distribusalAmount + ", accountNo=" + accountNo + ", status=" + status
+				+ ", dueDate=" + dueDate + ", paymentStatus=" + paymentStatus + "]";
 	}
 }

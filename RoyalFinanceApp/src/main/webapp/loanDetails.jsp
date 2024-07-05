@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
- <%@ page import="com.chainsys.royalfinance.model.User" %>
- <%@ page import="java.util.List" %>
- <%@ page import="java.util.ArrayList" %>
+     <%@ page import="com.chainsys.royalfinance.model.Loan" %>
+    <%@ page import="java.util.List" %>
+     <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>User Profile</title>
+<title>Loan Details</title>
 </head>
 <style>
 *
@@ -22,7 +22,7 @@
    height: 75px;
    width: 100%;
    display: flex;
-   box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
    position: fixed;
    top: 0;
    z-index: 1;
@@ -38,10 +38,9 @@
     width: 70%;
     height: 100%;  
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     align-items: center; 
     gap: 30px;
-    margin-right:25px;
 }
 #image1
 {
@@ -52,50 +51,30 @@
 	top:10px;
 	left:10px;
 }
-	body
-	{
-		background-color:wheat;
-	}
-	div
-	{
-		border:2px solid whitesmoke;
-		width:fit-content;
-		height:340px;
-		padding:30px;
-		position:relative;
-		left:450px;
-		top:130px;
-		background-color:whitesmoke;
-		box-shadow:1px 1px 1px 1px rgba(0,0,0,0.2);
-	}
-	label
-	{
-		font-size:20px;
-		color:grey;
-	}
-	p
-	{
-		display:inline;
-		font-size:20px;
-		color:blue;
-		position:relative;
-		left:20px;
-	}
-	button
-	{
-		width:100px;
-		padding:5px;
-		background-color:green;
-		color:white;
-		border-color:green;
-		font-size:20px;
-	}
-	.but1
-	{
-		position:relative;
-		left:120px;
-		bottom:35px;
-	}
+th
+{
+	background-color:blue;
+    color: white;
+	opacity:0.7;
+	font-size:20px;
+}
+td
+{
+	  color: grey;
+	   font-size: 15px;
+       font-family: Arial, Helvetica, sans-serif;
+}
+th, td
+{
+	padding: 5px;
+	text-align: center;
+}
+ table 
+{
+	position: relative;
+	top: 150px;
+	left:90px;
+} 
 </style>
 <body>
 <nav id="navbar">
@@ -132,37 +111,70 @@
 			</aside>
 		</section>
 	</nav>
-<div>
- <%
- List<User> userDetail=(ArrayList<User>)request.getAttribute("userDetail");
- if (userDetail != null && !userDetail.isEmpty())
- {
- 	  for(User user: userDetail)
- 	  {
- %>
-<label>Admin Id </label><p><%= user.getId()%></p><br><br>
-<label>Name     </label><p> <%= user.getName()%></p><br><br>
-<label>Date Of Birth  </label><p> <%= user.getDateOfBirth() %></p><br><br>
-<label>Phone Number</label> <p> <%= user.getPhoneNo() %></p><br><br>
-<label>Email Id  </label><p><%= user.getEmail() %></p><br><br>
-<label>Location  </label><p><%= user.getLocation()%></p><br><br>
-<form action="updateUser.jsp">
-<input type="hidden" name="id" value="<%= user.getId() %>">
-<input type="hidden" name="name" value="<%= user.getName() %>">
-<input type="hidden" name="email" value="<%= user.getEmail() %>">
-<button>Edit</button>
-</form>
-<%
+<table border="1px" cellspacing="0px">
+	<thead>
+		<tr>
+	<th>Loan Id</th>
+	<th>Borrower Id</th>
+	<th>Loan Issued</th>
+	<th>Interest(%)</th>
+	<th>Tenure(In Months)</th>
+	<th>Total Amount</th>
+	<th>Distribusal Amount</th>
+	<th>Interest Amount</th>
+	<th>Due Date</th>
+	<th>Payment Status</th>
+	<th>Send EMI Bill</th>
+	 </tr>
+	</thead>
+	<tbody>
+	<%
+		List<Loan> loans=(ArrayList<Loan>)request.getAttribute("loans");
+		if (loans != null && !loans.isEmpty())
+		{
+			 try
+			 {
+				 for (Loan amount : loans)
+				 {		
+			%>
+	<tr>
+		<td><%=amount.getLoanId() %></td>
+		<td><%=amount.getBorrowerId() %></td>
+		<td><%=amount.getDate() %></td>
+		<td><%=amount.getInterest()%></td>
+		<td><%=amount.getTenure()%></td>
+		<td><%=amount.getDistribusalAmount()+amount.getReduction()%></td>
+		<td><%=amount.getDistribusalAmount()%></td>
+		<td><%=amount.getReduction() %></td>
+		<td><%=amount.getDueDate() %></td>
+		<td><%=amount.getPaymentStatus() %></td>
+		<td>
+			<form action="">
+				<input type="hidden" name="id" id="borrower" value="<%=amount.getBorrowerId() %>">
+				<input type="hidden" name="loanId" id="loan" value="<%=amount.getLoanId() %>">
+				<button>Send</button>
+			</form>
+		</td>
+	<%
 			   }
+				  		
+				  }
+				  catch (Exception e) 
+				  { 
+						e.printStackTrace();
+				  }
 			  } 
 				else 
 				{
 	        %>
-	            <p>No Records found</p>
-	         <%
+	        </tr>
+	        <tr>
+	            <td colspan="15">No Records found</td>
+	        </tr>
+	        <%
 	        }
 	        %>
-<a href="adminHomePage.jsp"><button class="but1">Back</button></a>
-</div>
+	</tbody>
+</table>
 </body>
 </html>

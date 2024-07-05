@@ -89,7 +89,7 @@ h1
 				<a href="appliedLoanDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Status</p></a>
 			</aside>
 			<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
+				<a href="getReceipt" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
 			</aside>
 				<aside>
 				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>

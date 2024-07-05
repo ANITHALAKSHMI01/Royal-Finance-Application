@@ -137,11 +137,11 @@ th, td
 		                <option>Rejected</option>
 	                	<option>Unapproved</option>
 	                 <input type="submit"  value="Filter" class="button1">
-				      </select>
+				   </select>
 	 		</form>
 	 		</aside>
 			<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
+				<a href="getAllLoans" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
 				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
@@ -225,9 +225,9 @@ th, td
 					</form>
 				</td>
 				<td>
-					<form action=""method="post">
-					   	<input type="hidden" name="borrower" value="<%= borrower.getBorrowerId()%>">
-						<input type="hidden" name="id" value="<%= borrower.getApplicationId()%>">
+					<form action="/giveLoan"method="post">
+					   	<input type="hidden" name="id" value="<%= borrower.getBorrowerId()%>">
+						<input type="hidden" name="applicationId" value="<%= borrower.getApplicationId()%>">
 						<input type="hidden" name="amount" value="<%=borrower.getLoanAmount()%>">
 						<input type="hidden" name="tenure" value="<%=borrower.getTenure()%>">
 						<input type="submit" name="pay" value="Pay Now" class="button">
