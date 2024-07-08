@@ -53,9 +53,8 @@
 }
 th
 {
-	background-color:blue;
+	background-color:#ADD8E6;
     color: white;
-	opacity:0.7;
 	font-size:20px;
 }
 td
@@ -75,6 +74,13 @@ th, td
 	top: 150px;
 	left:90px;
 } 
+#search
+{
+	position:relative;
+	left:550px;
+	top:120px; 
+	padding:5px;
+}
 </style>
 <body>
 <nav id="navbar">
@@ -111,6 +117,9 @@ th, td
 			</aside>
 		</section>
 	</nav>
+	<!-- <form action="/searchLoanDetail" method="get">
+		<input type="text" placeholder="Search" id="search" name="searchData">
+	</form> -->
 <table border="1px" cellspacing="0px">
 	<thead>
 		<tr>
@@ -149,7 +158,7 @@ th, td
 		<td><%=amount.getDueDate() %></td>
 		<td><%=amount.getPaymentStatus() %></td>
 		<td>
-			<form action="">
+			<form action="/updateEMI" method="get">
 				<input type="hidden" name="id" id="borrower" value="<%=amount.getBorrowerId() %>">
 				<input type="hidden" name="loanId" id="loan" value="<%=amount.getLoanId() %>">
 				<button>Send</button>

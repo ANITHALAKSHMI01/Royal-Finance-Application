@@ -37,14 +37,14 @@ public class AdminController
 	@PostMapping("/viewPaySlip")
 	public String viewPaySlip(@RequestParam("viewId") String id,Model model)
 	{
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(id);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(id,0);
 		model.addAttribute("borrowers",borrowers);
 		return "viewPaySlip.jsp";
 	}
 	@PostMapping("/viewProof")
 	public String viewProof(@RequestParam("viewId") String id,Model model)
 	{
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(id);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(id,0);
 		model.addAttribute("borrowers",borrowers);
 		return "viewProof.jsp";
 	}
@@ -70,6 +70,14 @@ public class AdminController
 		model.addAttribute("borrowers",borrowers);
 		return "statusBasedBorrower.jsp";
 	}
+	@GetMapping("/removeLender")
+	public String removeLender(@RequestParam("borrowerId") String id,@RequestParam("status") String status,Model model)
+	{
+		userDAO.removeLender(id);
+		List<Borrower> borrowers=userDAO.getBorrowerByStatus(status);
+		model.addAttribute("borrowers",borrowers);
+		return "statusBasedBorrower.jsp";
+	}
 	@PostMapping("/giveLoan")
 	public String giveLoan(@RequestParam("id") String borrowerId,@RequestParam("applicationId") int applicationId,@RequestParam("amount") int loanAmount,@RequestParam("tenure") int tenure,Model model)
 	{
@@ -78,8 +86,9 @@ public class AdminController
 		String dateString =dateToday.toString();
 		int reduction=(loanAmount*10)/100;
 		int distribusalAmount=loanAmount-reduction;
-		Loan loan=new Loan(borrowerId,dateString,reduction,10,tenure,distribusalAmount);
-		List<Borrower> borrower=userDAO.getBorrowerDetail(borrowerId);
+		String paymentStatus="Unpaid";
+		Loan loan=new Loan(borrowerId,dateString,reduction,10,tenure,distribusalAmount,paymentStatus);
+		List<Borrower> borrower=userDAO.getBorrowerDetail(borrowerId,0);
 		if(!borrower.isEmpty())
 		{
 			borrower1=borrower.get(0);
@@ -105,12 +114,19 @@ public class AdminController
 		model.addAttribute("loans",loans);
 		return "loanDetails.jsp";
 	}
+	@GetMapping("/searchLoanDetail")
+	public String searchLoanDetail(@RequestParam("searchData") String searchData,Model model)
+	{
+		List<Loan> loans=userDAO.searchLoan(searchData);
+		model.addAttribute("loans",loans);
+		return "loanDetails.jsp";
+	}
 	@PostMapping("/getLoanDetail")
 	public String getLoanDetail(@RequestParam("id") String borrowerId,@RequestParam("loanId") int loanId,@RequestParam("amount") int amount,Model model)
 	{
 		Borrower borrower=null;
 		List<Loan> list=new ArrayList<>();
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(borrowerId);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(borrowerId,0);
 		if(!borrowers.isEmpty())
 		{
 			borrower=borrowers.get(0);
@@ -138,5 +154,34 @@ public class AdminController
 		List<Borrower> borrowers=userDAO.getAllBorrowers();
 		model.addAttribute("borrowers",borrowers);
 		return "lenders.jsp";
+	}
+	@GetMapping("/updateEMI")
+	public String updateEMI(@RequestParam("loanId") int loanId,@RequestParam("id") String borrowerId,Model model)
+	{
+		Loan loans=null;
+		List<Loan> loanDetail=userDAO.getLoanById(borrowerId);
+		List<Loan> list=new ArrayList<>();
+		if(!loanDetail.isEmpty())
+		{
+			loans=loanDetail.get(0);
+		}
+		int emi=loans.getLoanAmount()/loans.getTenure();
+		Loan loan=new Loan();
+		loan.setLoanId(loanId);
+		loan.setBorrowerId(borrowerId);
+		loan.setDate(loans.getDate());
+		loan.setEmi(emi);
+		list.add(loan);
+		model.addAttribute("list",list);
+		return "updateEMI.jsp";
+	}
+	@PostMapping("/updateDueDate")
+	public String updateDueDate(@RequestParam("loanId") int loanId,@RequestParam("id") String borrowerId,@RequestParam("dueDate") String dueDate,Model model)
+	{
+		String paymentStatus="Unpaid";
+		userDAO.updateEMI(dueDate, paymentStatus, loanId);
+		List<Loan> loans=userDAO.getAllLoans();
+		model.addAttribute("loans",loans);
+		return "loanDetails.jsp";
 	}
 }

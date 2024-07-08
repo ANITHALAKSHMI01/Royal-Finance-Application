@@ -18,6 +18,7 @@ public class LoanMapper implements RowMapper<Loan>
 		loan.setReduction(rs.getInt(6));
 		loan.setTenure(rs.getInt(7));
 		loan.setDueDate(rs.getString(8));
+		loan.setPaymentStatus(rs.getString(9));
 		loan.setLoanAmount(loan.getDistribusalAmount()+loan.getReduction());
 		return loan;
 	}

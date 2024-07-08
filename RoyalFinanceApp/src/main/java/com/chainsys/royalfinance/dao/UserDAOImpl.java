@@ -5,8 +5,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.chainsys.royalfinance.mapper.BorrowerMapper;
+import com.chainsys.royalfinance.mapper.EMIMapper;
 import com.chainsys.royalfinance.mapper.EmailMapper;
 import com.chainsys.royalfinance.mapper.FindUserIdMapper;
+import com.chainsys.royalfinance.mapper.GetLoanByIdMapper;
 import com.chainsys.royalfinance.mapper.LoanMapper;
 import com.chainsys.royalfinance.mapper.UserMapper;
 import com.chainsys.royalfinance.model.Borrower;
@@ -23,6 +25,8 @@ public class UserDAOImpl implements UserDAO
 	EmailMapper emailMapper;
 	BorrowerMapper borrowerMapper;
 	LoanMapper loanMapper;
+	GetLoanByIdMapper getLoanMapper;
+	EMIMapper emiMapper;
 	
 	@Override
 	public void saveUser(User user)
@@ -107,11 +111,10 @@ public class UserDAOImpl implements UserDAO
 		return borrowers;
 	}
 	@Override
-	public List<Borrower> getBorrowerDetail(String id)
+	public List<Borrower> getBorrowerDetail(String id,int isActive)
 	{
 		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=? && is_generate=0 && borrower_id=?";
-		Object[] params= {0,id};
-		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),params);
+		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),isActive,id);
 		return borrowers;
 	}
 	@Override
@@ -120,13 +123,6 @@ public class UserDAOImpl implements UserDAO
 		String update="update user set active=? where id=?";
 		Object[] params= {1,id};
 		jdbcTemplate.update(update,params);
-	}
-	@Override
-	public int getBorrowerIsActive(String id) 
-	{
-		String select="select is_active from borrower_details where borrower_id=?";
-		int active=jdbcTemplate.queryForObject(select, Integer.class,id);
-		return active;
 	}
 	@Override
 	public List<Borrower> searchBorrower(String searchData) 
@@ -145,31 +141,43 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Borrower> getBorrowerByStatus(String status)
 	{
-		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=0 && is_generate=0 && status=?";
-		Object[] params= {status};
-		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),params);
+		String select="select borrower.application_id,borrower.borrower_id,borrower.account_no,borrower.pan,borrower.salary,borrower.city,borrower.state,borrower.pincode,borrower.proof,borrower.loan_amount,borrower.pay_slip,borrower.tenure,borrower.status,borrower.is_active from borrower_details borrower inner join user  on borrower.borrower_id=user.id && borrower.is_active=0 && borrower.status=? && user.active=1";
+		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),status);
 		return borrowers;
+	}
+	@Override
+	public void removeLender(String id)
+	{
+		String update="update user set active=? where id=?";
+		jdbcTemplate.update(update,0,id);
 	}
 	@Override
 	public void giveLoan(Loan loan)
 	{
-		String insert="insert into loan_details(borrower_id,date_issued,interest,distribusal_amount,reduction)values(?,?,?,?,?)";
-		Object[] params= {loan.getBorrowerId(),loan.getDate(),loan.getInterest(),loan.getDistribusalAmount(),loan.getReduction()};
+		String insert="insert into loan_details(borrower_id,date_issued,interest,distribusal_amount,reduction,is_paid)values(?,?,?,?,?,?)";
+		Object[] params= {loan.getBorrowerId(),loan.getDate(),loan.getInterest(),loan.getDistribusalAmount(),loan.getReduction(),loan.getPaymentStatus()};
 		jdbcTemplate.update(insert, params);
 	}
 	@Override
 	public List<Loan> getApprovedLoan(String id) 
 	{
-		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id && borrower.borrower_id=? && loan.status=?";
-		Object[] params= {id,0};
-		List<Loan> loan=jdbcTemplate.query(select,new LoanMapper(),params);
+		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id && borrower.borrower_id=? && loan.status=?";
+		List<Loan> loan=jdbcTemplate.query(select,new LoanMapper(),id,0);
 		return loan;
 	}
 	@Override
 	public List<Loan> getAllLoans() 
 	{
-		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0";
+		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0";
 		List<Loan> loan=jdbcTemplate.query(select,new LoanMapper());
+		return loan;
+	}
+	@Override
+	public List<Loan> searchLoan(String searchData) 
+	{
+		System.out.println(searchData);
+		String search=String.format("select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan,borrower_details borrower where (loan.borrower_id like '%%s%%' or loan.loan_id like '%%s%%' or loan.is_paid like '%%s%%') and loan.borrower_id=borrower.borrower_id and loan.status=0 ", searchData,searchData,searchData);
+		List<Loan> loan=jdbcTemplate.query(search,new LoanMapper());
 		return loan;
 	}
 	@Override
@@ -193,5 +201,32 @@ public class UserDAOImpl implements UserDAO
 		String update="update account_details set total_balance=? where account_no=?";
 		Object[] params= {amount,accountNo};
 		jdbcTemplate.update(update,params);
+	}
+	@Override
+	public List<Loan> getLoanById(String id) 
+	{
+		String select="select loan.date_issued,borrower.loan_amount,borrower.tenure from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0 && loan.borrower_id=?";
+	    List<Loan> loan=jdbcTemplate.query(select,new GetLoanByIdMapper(),id);
+	    return loan;
+	}
+	@Override
+	public void updateEMI(String dueDate, String paymentStatus,int loanId)
+	{
+		String update="update loan_details set due_date=?,is_paid=? where loan_id=?";
+		Object[] params= {dueDate,paymentStatus,loanId};
+		jdbcTemplate.update(update,params);
+	}
+	@Override
+	public void updatePaymentStatus(String paymentStatus,int loanId)
+	{
+		String update="update loan_details set is_paid=? where loan_id=?";
+		jdbcTemplate.update(update,paymentStatus,loanId);
+	}
+	@Override
+	public List<Loan> getEMI(String id,String paymentStatus) 
+	{
+		String select="select loan.loan_id,loan.date_issued,borrower.loan_amount,borrower.tenure,loan.due_date,borrower.account_no from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0 && loan.borrower_id=? && loan.is_paid=?";
+	    List<Loan> loan=jdbcTemplate.query(select,new EMIMapper(),id,paymentStatus);
+	    return loan;
 	}
 }

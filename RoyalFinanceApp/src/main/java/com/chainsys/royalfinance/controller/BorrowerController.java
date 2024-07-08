@@ -1,7 +1,7 @@
 package com.chainsys.royalfinance.controller;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +59,7 @@ public class BorrowerController
 	public String appliedLoanDetail(Model model,HttpSession session)
 	{
 		String id=(String) session.getAttribute("id");
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(id);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(id,0);
 		model.addAttribute("borrowers",borrowers);
 		return "appliedLoanDetails.jsp";
 	}
@@ -92,5 +92,43 @@ public class BorrowerController
 		List<Loan> loanDetail=userDAO.getApprovedLoan(borrowerId);
 		model.addAttribute("loan",loanDetail);
 		return "loanReceipt.jsp";
+	}
+	@GetMapping("/payEMI")
+	public String payEMI(HttpSession session,Model model)
+	{
+		String id=(String) session.getAttribute("id");
+		Loan loans=null;
+		List<Loan> loanDetail=userDAO.getEMI(id,"Unpaid");
+		List<Loan> list=new ArrayList<>();
+		if(!loanDetail.isEmpty())
+		{
+			loans=loanDetail.get(0);
+		}
+		if(loans!=null)
+		{
+			int emi=loans.getLoanAmount()/loans.getTenure();
+			Loan loan=new Loan();
+			loan.setLoanId(loans.getLoanId());
+			loan.setBorrowerId(id);
+			loan.setDueDate(loans.getDueDate());;
+			loan.setEmi(emi);
+			loan.setAccountNo(loans.getAccountNo());
+			list.add(loan);
+			model.addAttribute("list",list);
+		}
+		return "payEMI.jsp";
+	}
+	@PostMapping("/updatePayment")
+	public String updatePayment(@RequestParam("id") String borrowerId,@RequestParam("loanId") int loanId,@RequestParam("amount") int amount,@RequestParam("account") long accountNo)
+	{
+		long adminAccountNo=6754321890765l;
+		int adminTotalBalance=userDAO.getTotalBalance(adminAccountNo);
+		int borrowerTotalBalance=userDAO.getTotalBalance(accountNo);
+		int balance=borrowerTotalBalance-amount;
+		int creditAmount=adminTotalBalance+amount;
+		userDAO.updateBalance(adminAccountNo, creditAmount);
+		userDAO.updateBalance(accountNo, balance);
+		userDAO.updatePaymentStatus("Paid", loanId);
+		return "paymentSuccessfull.jsp";
 	}
 }

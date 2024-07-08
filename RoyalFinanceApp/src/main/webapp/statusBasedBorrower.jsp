@@ -157,7 +157,7 @@ th, td
 	 		</form>
 	 		</aside>
 			<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
+				<a href="getAllLoans" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
 				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
@@ -224,9 +224,9 @@ th, td
 					</td>
 					<td><%=borrower.getStatus()%></td>
 					<td>
-					<form action="" method="get">
+					<form action="/removeLender" method="get">
 						 <input type="hidden" name="borrowerId" value="<%= borrower.getBorrowerId()%>"> 
-						<input type="hidden" name="id" value="<%= borrower.getApplicationId()%>">
+						<input type="hidden" name="status" value="<%=borrower.getStatus()%>">
 						 <input type="submit" class="delete" name="delete" value="Delete">
 					</form>
 				</td>

@@ -21,16 +21,21 @@ public interface UserDAO
 	public void addAccount(long accountNo,int amount,String id);
 	public void addBorrower(Borrower borrower);
 	public List<Borrower> getAllBorrowers();
-	public List<Borrower> getBorrowerDetail(String id);
-	public int getBorrowerIsActive(String id);
+	public List<Borrower> getBorrowerDetail(String id,int isActive);
 	public void updateUserActive(String id);
 	public List<Borrower> searchBorrower(String searchData);
 	public void updateLoanStatus(int applicationId,String status);
 	public List<Borrower> getBorrowerByStatus(String status);
+	public void removeLender(String id);
 	public void giveLoan(Loan loan);
 	public List<Loan> getApprovedLoan(String id);
 	public List<Loan> getAllLoans();
+	public List<Loan> searchLoan(String searchData);
 	public void updateBillStatus(String id);
 	public int getTotalBalance(long accountNo);
 	public void updateBalance(long accountNo,int amount);
+	public void updateEMI(String dueDate,String paymentStatus,int loanId);
+	public List<Loan> getLoanById(String id);
+	public List<Loan> getEMI(String id,String paymentStatus);
+	public void updatePaymentStatus(String paymentStatus,int loanId);
 }

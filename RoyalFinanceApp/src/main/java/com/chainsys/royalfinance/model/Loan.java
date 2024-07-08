@@ -9,11 +9,12 @@ public class Loan
 	private int interest;
 	private int tenure;
 	private int distribusalAmount;
+	private int emi;
 	private long accountNo;
 	private int status;
 	private String dueDate;
 	private String paymentStatus;
-	public Loan(String borrowerId,String date,int reduction,int interest,int tenure,int distribusalAmount)
+	public Loan(String borrowerId,String date,int reduction,int interest,int tenure,int distribusalAmount,String paymentStatus)
 	{
 		this.borrowerId=borrowerId;
 		this.date=date;
@@ -21,6 +22,7 @@ public class Loan
 		this.interest=interest;
 		this.tenure=tenure;
 		this.distribusalAmount=distribusalAmount;
+		this.paymentStatus=paymentStatus;
 	}
 	public Loan()
 	{
@@ -90,6 +92,14 @@ public class Loan
 	{
 		this.reduction = reduction;
 	}
+	public int getEmi() 
+	{
+		return emi;
+	}
+	public void setEmi(int emi)
+	{
+		this.emi = emi;
+	}
 	public long getAccountNo() 
 	{
 		return accountNo;
@@ -127,7 +137,7 @@ public class Loan
 	{
 		return "Loan [loanId=" + loanId + ", borrowerId=" + borrowerId + ", loanAmount=" + loanAmount + ", reduction="
 				+ reduction + ", date=" + date + ", interest=" + interest + ", tenure=" + tenure
-				+ ", distribusalAmount=" + distribusalAmount + ", accountNo=" + accountNo + ", status=" + status
-				+ ", dueDate=" + dueDate + ", paymentStatus=" + paymentStatus + "]";
+				+ ", distribusalAmount=" + distribusalAmount + ", emi=" + emi + ", accountNo=" + accountNo + ", status="
+				+ status + ", dueDate=" + dueDate + ", paymentStatus=" + paymentStatus + "]";
 	}
 }

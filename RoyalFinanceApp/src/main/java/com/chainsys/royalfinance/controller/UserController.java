@@ -29,6 +29,8 @@ public class UserController
 	public String register(@RequestParam("name") String name,@RequestParam("dateOfBirth") String dateOfBirth,@RequestParam("phoneNo") Long phoneNo,@RequestParam("emailId") String emailId,@RequestParam("password") String password,@RequestParam("location") String location,Model model)
 	{
 		User user=new User();
+		User existingUser=null;
+		List<User> userDetail=null;
 		String phoneNumber=phoneNo.toString();
 		String id=name.substring(2,5)+phoneNumber.substring(4,6);
 		user.setId(id);
@@ -39,17 +41,39 @@ public class UserController
 		user.setPhoneNo(phoneNo);
 		user.setLocation(location);
 		user.setRole("Borrower");
-		List<User> userDetail=userDAO.checkUserDetails(emailId);
+		try
+		{
+			userDetail=userDAO.checkUserDetails(emailId);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		if(!userDetail.isEmpty() || Boolean.FALSE.equals(validation.checkName(name,model)) || Boolean.FALSE.equals(validation.checkEmail(emailId,model)) || Boolean.FALSE.equals(validation.checkPhoneNo(phoneNumber,model)) || Boolean.FALSE.equals(validation.checkPassword(password,model)))
 		{
-			User existingUser = userDetail.get(0);
-			if(emailId.equals(existingUser.getEmail()) && password.equals(existingUser.getPassword()) )
+			try
 			{
-				return "userRegistration.jsp";
+				existingUser = userDetail.get(0);
 			}
-			else if(emailId.equals(existingUser.getEmail()) || password.equals(existingUser.getPassword()))
+			catch(Exception e)
 			{
-				return "userRegistration.jsp";
+				e.printStackTrace();
+			}
+			if(existingUser!=null)
+			{
+				if(emailId.equals(existingUser.getEmail()) && password.equals(existingUser.getPassword()) )
+				{
+					return "userRegistration.jsp";
+				}
+				else if(emailId.equals(existingUser.getEmail()) || password.equals(existingUser.getPassword()))
+				{
+					return "userRegistration.jsp";
+				}
+				else
+				{
+					userDAO.saveUser(user);
+					return "registrationSuccess.jsp";
+				}
 			}
 			else
 			{

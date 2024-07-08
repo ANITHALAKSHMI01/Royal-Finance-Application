@@ -116,7 +116,7 @@
 				<a href="getReceipt" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
 			</aside>
 				<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
+				<a href="payEMI" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
 			</aside>
 			<aside>
 				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
