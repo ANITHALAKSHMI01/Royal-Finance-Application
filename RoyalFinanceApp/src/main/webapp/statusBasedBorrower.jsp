@@ -20,7 +20,7 @@
 }
 #navbar
 {
-   border: 2px solid #00008B; 
+   border: 2px solid #0077b6; 
    height: 75px;
    width: 100%;
    display: flex;
@@ -28,7 +28,7 @@
    position: fixed;
    top: 0;
    z-index: 1;
-  background-color: #00008B;
+  background-color: #0077b6;
 } 
 #left_nav
 {
@@ -128,6 +128,28 @@ th, td
 	position:relative;
 	top:1000px;
 } 
+#filter
+{
+	position:relative;
+	top:110px;
+	left:900px;
+	padding:5px;
+}
+.button1
+{
+	position:relative;
+	top:110px;
+	left:950px;
+	padding:5px;
+	width:100px;
+}
+#search
+{
+	position:relative;
+	left:550px;
+	top:140px; 
+	padding:5px;
+}
 </style>
 <body>
 <nav id="navbar">
@@ -145,18 +167,6 @@ th, td
 				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
-			<form action="/getBorrowerByStatus" method="get">
-	  			<select name="filter" id="approve">
-				    	<option>Status</option> 
-				      	<option>Approved</option>
-				      	<option>On Progress</option>
-		                <option>Rejected</option>
-	                	<option>Unapproved</option>
-	                 <input type="submit"  value="Filter" class="button1">
-				      </select>
-	 		</form>
-	 		</aside>
-			<aside>
 				<a href="getAllLoans" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
@@ -164,6 +174,19 @@ th, td
 			</aside>
 		</section>
 	</nav>
+	<form action="/searchBorrowerByStatus" method="get">
+		<input type="text" placeholder="Search" id="search" name="searchData">
+	</form>
+	<form action="/getBorrowerByStatus" method="get">
+	  			<select name="filter" id="filter">
+				    	<option>Status</option> 
+				      	<option>Approved</option>
+				      	<option>On Progress</option>
+		                <option>Rejected</option>
+	                	<option>Unapproved</option>
+	                 <input type="submit"  value="Filter" class="button1">
+				   </select>
+	 		</form>
 	<table border="2px" cellspacing="0px">
 	<thead>
 		<tr>
@@ -211,7 +234,7 @@ th, td
 				<td><img src="data:image/jpeg;base64,<%=paySlip%>"
 					alt="Pay Slip" style="width:200px; height:200px;"><br><br>
 					<form action="/viewPaySlip" method="post">
-						<input type="hidden" name="viewId" value="<%= borrower.getBorrowerId()%>">
+						<input type="hidden" name="viewId" value="<%=borrower.getBorrowerId()%>">
 				        <input type="submit" name="view" value="View" class="button">
 					</form>
 					</td>
@@ -220,7 +243,7 @@ th, td
 					<form action="/viewProof" method="post">
 						<input type="hidden" name="viewId" value="<%= borrower.getBorrowerId()%>">
 				        <input type="submit" name="view" value="View" class="button">
-					</form>
+					</form> 
 					</td>
 					<td><%=borrower.getStatus()%></td>
 					<td>

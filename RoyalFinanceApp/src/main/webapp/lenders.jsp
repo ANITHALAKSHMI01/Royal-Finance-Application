@@ -19,7 +19,7 @@
 }
 #navbar
 {
-   border: 2px solid #00008B; 
+   border: 2px solid #0077b6; 
    height: 75px;
    width: 100%;
    display: flex;
@@ -27,7 +27,7 @@
    position: fixed;
    top: 0;
    z-index: 1;
-  background-color: #00008B;
+  background-color: #0077b6;
 } 
 #left_nav
 {
@@ -71,9 +71,8 @@ h1
 }
 th
 {
-	background-color:blue;
+	background-color:#119ce7;
     color: white;
-	opacity:0.7;
 	font-size:20px;
 }
 td
@@ -110,7 +109,22 @@ th, td
 }
 #approve
 {
-	padding:3px;
+padding:5px;
+}
+#filter
+{
+	position:relative;
+	top:90px;
+	left:900px;
+	padding:5px;
+}
+.button1
+{
+	position:relative;
+	top:90px;
+	left:950px;
+	padding:5px;
+	width:100px;
 }
 </style>
 <body>
@@ -129,18 +143,6 @@ th, td
 				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
-			<form action="/getBorrowerByStatus" method="get">
-	  			<select name="filter" id="approve">
-				    	<option>Status</option> 
-				      	<option>Approved</option>
-				      	<option>On Progress</option>
-		                <option>Rejected</option>
-	                	<option>Unapproved</option>
-	                 <input type="submit"  value="Filter" class="button1">
-				   </select>
-	 		</form>
-	 		</aside>
-			<aside>
 				<a href="getAllLoans" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
@@ -151,6 +153,16 @@ th, td
 	<form action="/searchBorrower" method="get">
 		<input type="text" placeholder="Search" id="search" name="searchData">
 	</form>
+	<form action="/getBorrowerByStatus" method="get">
+	  			<select name="filter" id="filter">
+				    	<option>Status</option> 
+				      	<option>Approved</option>
+				      	<option>On Progress</option>
+		                <option>Rejected</option>
+	                	<option>Unapproved</option>
+	                 <input type="submit"  value="Filter" class="button1">
+				   </select>
+	 		</form>
 <table border="1px" cellspacing="0px">
 	<thead>
 		<tr>

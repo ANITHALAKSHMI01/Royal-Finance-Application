@@ -113,7 +113,7 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Borrower> getBorrowerDetail(String id,int isActive)
 	{
-		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=? && is_generate=0 && borrower_id=?";
+		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=? && borrower_id=?";
 		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),isActive,id);
 		return borrowers;
 	}
@@ -175,8 +175,10 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Loan> searchLoan(String searchData) 
 	{
-		System.out.println(searchData);
-		String search=String.format("select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan,borrower_details borrower where (loan.borrower_id like '%%s%%' or loan.loan_id like '%%s%%' or loan.is_paid like '%%s%%') and loan.borrower_id=borrower.borrower_id and loan.status=0 ", searchData,searchData,searchData);
+		String search=String.format("select loan.loan_id, loan.borrower_id, loan.date_issued, loan.interest, loan.distribusal_amount, loan.reduction, borrower.tenure, loan.due_date, loan.is_paid " +
+                "from loan_details loan, borrower_details borrower " +
+                "where (loan.borrower_id like '%%%s%%' OR loan.loan_id like '%%%s%%' or loan.is_paid like '%%%s%%') " +
+                "and loan.borrower_id = borrower.borrower_id and loan.status = 0", searchData, searchData, searchData);
 		List<Loan> loan=jdbcTemplate.query(search,new LoanMapper());
 		return loan;
 	}
@@ -226,7 +228,36 @@ public class UserDAOImpl implements UserDAO
 	public List<Loan> getEMI(String id,String paymentStatus) 
 	{
 		String select="select loan.loan_id,loan.date_issued,borrower.loan_amount,borrower.tenure,loan.due_date,borrower.account_no from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0 && loan.borrower_id=? && loan.is_paid=?";
-	    List<Loan> loan=jdbcTemplate.query(select,new EMIMapper(),id,paymentStatus);
-	    return loan;
+	    return jdbcTemplate.query(select,new EMIMapper(),id,paymentStatus);
+	}
+	@Override
+	public int totalRegisteredUsers() 
+	{
+		String count="select count(*) from user where status=0 && role=?";
+		return jdbcTemplate.queryForObject(count,Integer.class,"Borrower");
+	}
+	@Override
+	public int totalLenders() 
+	{
+		String count="select count(*) from borrower_details";
+		return jdbcTemplate.queryForObject(count,Integer.class);
+	}
+	@Override
+	public int totalApprovedLenders()
+	{
+		String count="select count(*) from borrower_details where status=?";
+		return jdbcTemplate.queryForObject(count,Integer.class,"Approved");
+	}
+	@Override
+	public int calculateProfit()
+	{
+		String profit="select sum(reduction) from loan_details";
+		return jdbcTemplate.queryForObject(profit,Integer.class);
+	}
+	@Override
+	public int calculateTotalLoan() 
+	{
+		String totalLoan="select sum(distribusal_amount) from  loan_details";
+		return jdbcTemplate.queryForObject(totalLoan,Integer.class);
 	}
 }

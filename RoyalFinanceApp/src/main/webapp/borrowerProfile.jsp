@@ -18,16 +18,16 @@
 }
 #navbar
 {
-   border: 2px solid #00008B; 
+   border: 2px solid #0077b6; 
    height: 75px;
    width: 100%;
    display: flex;
-   box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
    position: fixed;
    top: 0;
    z-index: 1;
-  background-color: #00008B;
-} 
+  background-color: #0077b6;
+}  
 #left_nav
 {
    width: 30%;
@@ -52,32 +52,26 @@
 	top:10px;
 	left:10px;
 }
-	body
-	{
-		background-color:wheat;
-	}
 	div
 	{
-		border:2px solid whitesmoke;
+		border:2px solid #D3D3D3;
 		width:fit-content;
 		height:340px;
 		padding:30px;
 		position:relative;
 		left:450px;
 		top:130px;
-		background-color:whitesmoke;
+		background-color:#D3D3D3;
 		box-shadow:1px 1px 1px 1px rgba(0,0,0,0.2);
 	}
 	label
 	{
 		font-size:20px;
-		color:grey;
 	}
 	p
 	{
 		display:inline;
 		font-size:20px;
-		color:blue;
 		position:relative;
 		left:20px;
 	}
@@ -85,10 +79,11 @@
 	{
 		width:100px;
 		padding:5px;
-		background-color:green;
+		background-color:#0077b6;
 		color:white;
-		border-color:green;
+		border-color:#0077b6;
 		font-size:20px;
+		border-radius:10px;
 	}
 	.but1
 	{
@@ -129,12 +124,12 @@
  	  for(User user: userDetail)
  	  {
  %>
-	  <label>Borrower Id </label><p><%= user.getId()%></p><br><br>
-<label>Name     </label><p> <%= user.getName()%></p><br><br>
-<label>Date Of Birth  </label><p> <%= user.getDateOfBirth() %></p><br><br>
-<label>Phone Number</label> <p> <%= user.getPhoneNo() %></p><br><br>
-<label>Email Id  </label><p><%= user.getEmail() %></p><br><br>
-<label>Location  </label><p><%= user.getLocation()%></p><br><br>
+	  <label><b>Borrower Id : </b></label><p><%= user.getId()%></p><br><br>
+<label><b>Name   :  </b></label><p> <%= user.getName()%></p><br><br>
+<label><b>Date Of Birth : </b></label><p> <%= user.getDateOfBirth() %></p><br><br>
+<label><b>Phone Number : </b></label> <p> <%= user.getPhoneNo() %></p><br><br>
+<label><b>Email Id : </b></label><p><%= user.getEmail() %></p><br><br>
+<label><b>Location  : </b></label><p><%= user.getLocation()%></p><br><br>
 <form action="updateUser.jsp">
 <input type="hidden" name="id" value="<%= user.getId() %>">
 <input type="hidden" name="name" value="<%= user.getName() %>">

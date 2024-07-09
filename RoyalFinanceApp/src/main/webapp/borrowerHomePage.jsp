@@ -19,15 +19,15 @@ overflow-x:hidden;
 }
 #navbar
 {
-   border: 2px solid #00008B; 
+   border: 2px solid #0077b6; 
    height: 75px;
    width: 100%;
    display: flex;
-   box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
    position: fixed;
    top: 0;
    z-index: 1;
-  background-color: #00008B;
+  background-color: #0077b6;
 } 
 #left_nav
 {

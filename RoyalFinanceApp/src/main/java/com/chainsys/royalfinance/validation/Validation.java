@@ -34,7 +34,7 @@ public class Validation
 	}
 	public boolean checkPhoneNo(String phoneNo,Model model)
 	{
-		String regex="[6789][0-9]{9}";
+		String regex="[6789]\\d{9}";
 		if(phoneNo.matches(regex))
 		{
 			return false;
@@ -48,7 +48,7 @@ public class Validation
 	}
 	public boolean checkPassword(String password,Model model)
 	{
-		String regex="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@!#$%^&*]).{6}$";
+		String regex="(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@!#$%^&*]).{6}$";
 		if(password.matches(regex))
 		{
 			return false;
@@ -62,7 +62,7 @@ public class Validation
 	}
 	public boolean checkPincode(String pincode,Model model)
 	{
-		String regex="^[0-9]{6}$";
+		String regex="^\\d{6}$";
 		if(pincode.matches(regex))
 		{
 			return false;
@@ -76,7 +76,7 @@ public class Validation
 	}
 	public boolean checkAccountNo(String accountNo,Model model)
 	{
-		String regex="^[0-9]{13}$";
+		String regex="^\\d{13}$";
 		if(accountNo.matches(regex))
 		{
 			return false;
@@ -90,7 +90,7 @@ public class Validation
 	}
 	public boolean checkPAN(String pan,Model model)
 	{
-		String regex="[A-Z]{5}[0-9]{4}[A-Z]{1}";
+		String regex="[A-Z]{5}\\d{4}[A-Z]";
 		if(pan.matches(regex))
 		{
 			return false;

@@ -110,7 +110,7 @@ public class BorrowerController
 			Loan loan=new Loan();
 			loan.setLoanId(loans.getLoanId());
 			loan.setBorrowerId(id);
-			loan.setDueDate(loans.getDueDate());;
+			loan.setDueDate(loans.getDueDate());
 			loan.setEmi(emi);
 			loan.setAccountNo(loans.getAccountNo());
 			list.add(loan);

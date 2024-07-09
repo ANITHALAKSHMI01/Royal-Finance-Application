@@ -38,4 +38,9 @@ public interface UserDAO
 	public List<Loan> getLoanById(String id);
 	public List<Loan> getEMI(String id,String paymentStatus);
 	public void updatePaymentStatus(String paymentStatus,int loanId);
+	public int totalRegisteredUsers();
+	public int totalLenders();
+	public int totalApprovedLenders();
+	public int calculateProfit();
+	public int calculateTotalLoan();
 }

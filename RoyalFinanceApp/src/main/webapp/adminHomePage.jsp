@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="com.chainsys.royalfinance.dao.UserDAOImpl" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +20,7 @@ overflow-x:hidden;
 }
 #navbar
 {
-   border: 2px solid #00008B; 
+   border: 2px solid #0077b6; 
    height: 75px;
    width: 100%;
    display: flex;
@@ -25,7 +28,7 @@ overflow-x:hidden;
    position: fixed;
    top: 0;
    z-index: 1;
-  background-color: #00008B;
+  background-color: #0077b6;
 } 
 #left_nav
 {
@@ -113,6 +116,14 @@ main
 	top:70px;
 	font-size:40px;
 }
+.main_block1
+{
+	position:relative;
+	top:100px;
+	display:flex;
+	justify-content:center;
+	gap:40px;
+}
 </style>
 <title>Admin Home</title>
 </head>
@@ -132,18 +143,6 @@ main
 				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
-			<form action="/getBorrowerByStatus" method="get">
-	  			<select name="filter" id="approve">
-				    	<option>Status</option> 
-				      	<option>Approved</option>
-				      	<option>On Progress</option>
-		                <option>Rejected</option>
-	                	<option>Unapproved</option>
-	                 <input type="submit"  value="Filter" class="button1">
-				      </select>
-	 		</form>
-	 		</aside>
-			<aside>
 				<a href="getAllLoans" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
@@ -159,18 +158,12 @@ main
 				<p class="head">Current Registered Borrowers</p>
 			</div>
 			<div class="card-back">
-				<% int total=0;
-		/* 	try
-			{
-				AdminImplementation admin=new AdminImplementation();
-				total=admin.totalRegisteredBorrowers();
-			} 
-			catch (ClassNotFoundException | SQLException e) 
-			{
-				e.printStackTrace();
-			} */
-			%>
-			<p class="value"><%=total%></p>
+				<% int totalUsers=0;
+				ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+				UserDAOImpl userDAOImpl = (UserDAOImpl) context.getBean("userDAOImpl");
+				totalUsers=userDAOImpl.totalRegisteredUsers();  
+			    %>
+			<p class="value"><%=totalUsers%></p>
 			</div>
 		</div>
 	</div>
@@ -182,18 +175,10 @@ main
 			<p class="head">Current Lenders</p>
 			</div>
 			<div class="card-back">
-				<% int total1=0;
-		/* 	try
-			{
-				AdminImplementation admin=new AdminImplementation();
-				total1=admin.totalLenders();
-			} 
-			catch (ClassNotFoundException | SQLException e) 
-			{
-				e.printStackTrace();
-			} */
-			%>
-			<p class="value"><%=total1%></p>
+				<% int totalLenders=0;
+				totalLenders=userDAOImpl.totalLenders();
+				%>
+			<p class="value"><%=totalLenders%></p>
 			</div>
 		</div>
 	</div>
@@ -205,22 +190,61 @@ main
 			<p class="head">Current Approved Lenders</p>
 			</div>
 			<div class="card-back">
-				<% int total2=0;
-		/* 	try
-			{
-				AdminImplementation admin=new AdminImplementation();
-				total2=admin.totalApprovedLenders();
-			} 
-			catch (ClassNotFoundException | SQLException e) 
-			{
-				e.printStackTrace();
-			} */
-			%>
-			<p class="value"><%=total2%></p>
+				<%
+				int totalApprovedLenders=userDAOImpl.totalApprovedLenders();
+			    %>
+			<p class="value"><%=totalApprovedLenders%></p>
 			</div>
 		</div>
 	</div>
 	</main>
+	</div>
+	<div class="main_block1">
+		<main>
+			<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Check Balance</p>
+			</div>
+			<div class="card-back">
+				<% 
+				long accountNo=6754321890765l;
+				int totalBalance=userDAOImpl.getTotalBalance(accountNo);
+			    %>
+			<p class="value"><%=totalBalance%></p>
+			</div>
+		</div>
+	</div>
+		</main>
+		<main>
+			<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Profit</p>
+			</div>
+			<div class="card-back">
+				<% 
+				int profit=userDAOImpl.calculateProfit();
+			    %>
+			<p class="value"><%=profit%></p>
+			</div>
+		</div>
+	</div>
+		</main>
+		<main>
+			<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Granted loan</p>
+			</div>
+			<div class="card-back">
+				<% int providedLoan=userDAOImpl.calculateTotalLoan();
+			    %>
+			<p class="value"><%=providedLoan%></p>
+			</div>
+		</div>
+	</div>
+		</main>
 	</div>
 </body>
 </html>

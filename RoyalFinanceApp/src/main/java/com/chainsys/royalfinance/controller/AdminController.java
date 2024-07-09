@@ -70,6 +70,13 @@ public class AdminController
 		model.addAttribute("borrowers",borrowers);
 		return "statusBasedBorrower.jsp";
 	}
+	@GetMapping("/searchBorrowerByStatus")
+	public String searchBorrowerByStatus(@RequestParam("searchData") String searchData,Model model)
+	{
+		List<Borrower> borrowers=userDAO.searchBorrower(searchData);
+		model.addAttribute("borrowers",borrowers);
+		return "statusBasedBorrower.jsp";
+	}
 	@GetMapping("/removeLender")
 	public String removeLender(@RequestParam("borrowerId") String id,@RequestParam("status") String status,Model model)
 	{

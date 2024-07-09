@@ -16,10 +16,6 @@ public class Borrower
 	private byte[] proof;
 	private String status;
 	private int isActive;
-	public Borrower()
-	{
-		
-	}
 	public int getApplicationId()
 	{
 		return applicationId;

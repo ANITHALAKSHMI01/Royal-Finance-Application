@@ -48,7 +48,8 @@
 			 {
 				 for (Loan loan : list)
 				 {		
-						%>
+						if(loan.getDueDate()!=null)
+						{%>
  <label for="id">Borrower Id : </label>
 	<p class="out"><%=loan.getBorrowerId()%></p><br>
 	<label>Due Date    :  </label><p class="out" id="date"><%=loan.getDueDate()%></p><br>
@@ -65,6 +66,15 @@
 		</form>
 		<%
 	  }
+						else 
+						{ 
+				    %>
+				    <p id="record">No Dues.</p>
+				     <a href="borrowerHomePage.jsp"><button class="button">Back</button></a>
+				    <%
+				     }
+				 }
+				 
 			 }
 			 catch(Exception e)
 			 {

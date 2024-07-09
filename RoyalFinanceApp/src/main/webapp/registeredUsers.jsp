@@ -21,7 +21,7 @@ body
 }
 #navbar
 {
-   border: 2px solid #00008B; 
+   border: 2px solid #0077b6; 
    height: 75px;
    width: 100%;
    display: flex;
@@ -29,7 +29,7 @@ body
    position: fixed;
    top: 0;
    z-index: 1;
-  background-color: #00008B;
+  background-color: #0077b6;
 } 
 #left_nav
 {
@@ -75,9 +75,8 @@ h1
 }
 th
 {
-	background-color:blue;
+	background-color:#119ce7;
     color: white;
-	opacity:0.7;
 	font-size:20px;
 }
 td
@@ -94,7 +93,7 @@ th, td
 table 
 {
 	position: relative;
-	top:200px;
+	top:180px;
 	left: 150px;
 }
 #button
@@ -110,9 +109,8 @@ table
 {
 	position: relative;
 	top:130px;
-	left: 550px;
-}
-</style>
+	left: 500px;
+}</style>
 </head>
 <body>
 <nav id="navbar">
@@ -130,28 +128,15 @@ table
 				<a href="listAllBorrowers" style="color: transparent;"><p style="color:white; font-size:22px;">Lenders</p></a>
 			</aside>
 			<aside>
-			<form action="/getBorrowerByStatus" method="get">
-	  			<select name="filter" id="approve">
-				    	<option>Status</option> 
-				      	<option>Approved</option>
-				      	<option>On Progress</option>
-		                <option>Rejected</option>
-	                	<option>Unapproved</option>
-	                 <input type="submit"  value="Filter" class="button1">
-				      </select>
-	 		</form>
-	 		</aside>
-			<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
+				<a href="getAllLoans" style="color: transparent;"><p style="color:white; font-size:22px;">Loan Details</p></a>
 			</aside>
 			<aside>
 				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
 			</aside>
 		</section>
 	</nav>
-<h1>Registered Borrowers</h1><br><br><br><br>
 <form action="/searchUser" method="get" class="search">
-	<input type="search" name="searchData" placeholder="Search">
+	<input type="search" name="searchData" style="padding:8px; width:250px;" placeholder="Search">
 </form>
  <table border="1px" cellspacing="0px">
 	<thead>
