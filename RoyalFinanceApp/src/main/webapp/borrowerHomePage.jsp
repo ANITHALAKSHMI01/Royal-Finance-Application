@@ -91,8 +91,8 @@ h1
 			<aside>
 				<a href="getReceipt" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
 			</aside>
-				<aside>
-				<a href="payEMI" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
+			<aside>
+				<a href="/payEMI" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
 			</aside>
 			<aside>
 				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
@@ -103,7 +103,7 @@ h1
 	<h1>Get Amount Online with Royal Finance</h1><br>
 	<p class="para">Register and submit documents online. Interest rates 10%. Quick Registration.</p>
 	<p class="para">
-Avail amount ranging from Rs.10,000, not on a long term or short term but <br> on your own terms. 
+Avail amount ranging from Rs.10,000. Not on a long term or short term but <br> on your own terms. 
 Experience a completely online and paperless process.</p>
 <img src="images/lending.jpg" alt="image" id="image" style="width:430px;height:330px;">	
 	</div>

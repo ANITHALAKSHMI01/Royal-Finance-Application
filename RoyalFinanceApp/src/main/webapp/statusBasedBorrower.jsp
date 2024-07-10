@@ -72,7 +72,7 @@ h1
 }
 th
 {
-	background-color:blue;
+	background-color:#119ce7;
     color: white;
 	opacity:0.7;
 	font-size:20px;

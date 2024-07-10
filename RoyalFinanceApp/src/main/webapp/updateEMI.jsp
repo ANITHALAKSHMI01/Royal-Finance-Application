@@ -63,7 +63,8 @@ button
 	 <label>Date    :  </label><p class="out"><%=dateToday%></p><br><br>
 	 <label>Amount : </label><p class="out"><%=loan.getEmi()%></p><br><br>
 	 <form action="/updateDueDate" method="post">
-	        <label for="due">Due Date:</label><input type="date" min=<%=dateToday%> name="dueDate" id="due" required><br><br>
+<%-- 	        <label for="due">Due Date:</label><input type="date" min=<%=dateToday%> name="dueDate" id="due" required><br><br> --%>
+		   <label for="due">Due Date:</label><input type="date"  name="dueDate" id="due" required><br><br> 
 	     	<input type="hidden" name="id" value="<%=loan.getBorrowerId()%>">
 			<input type="hidden" name="loanId" value="<%=loan.getLoanId()%>">
 			<button>Send</button>

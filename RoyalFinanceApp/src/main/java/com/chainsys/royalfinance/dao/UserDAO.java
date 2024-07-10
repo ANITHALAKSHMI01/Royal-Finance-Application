@@ -21,7 +21,7 @@ public interface UserDAO
 	public void addAccount(long accountNo,int amount,String id);
 	public void addBorrower(Borrower borrower);
 	public List<Borrower> getAllBorrowers();
-	public List<Borrower> getBorrowerDetail(String id,int isActive);
+	public List<Borrower> getBorrowerDetail(String id);
 	public void updateUserActive(String id);
 	public List<Borrower> searchBorrower(String searchData);
 	public void updateLoanStatus(int applicationId,String status);
@@ -38,6 +38,7 @@ public interface UserDAO
 	public List<Loan> getLoanById(String id);
 	public List<Loan> getEMI(String id,String paymentStatus);
 	public void updatePaymentStatus(String paymentStatus,int loanId);
+	public void updatePenalty(int penalty,int loanId);
 	public int totalRegisteredUsers();
 	public int totalLenders();
 	public int totalApprovedLenders();

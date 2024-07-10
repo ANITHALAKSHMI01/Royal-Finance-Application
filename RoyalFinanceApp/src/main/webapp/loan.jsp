@@ -10,12 +10,16 @@
 <title>Bill Generation</title>
 </head>
 <style>
+label
+{
+	font-size:20px;
+}
 div
 {
 	border:2px solid whitesmoke;
 	box-shadow:1px 1px 1px 1px rgba(0,0,0,0.2);
 	width:300px;
-	height:300px;
+	height:350px;
 	padding:10px;
 	position:relative;
 	left:500px;
@@ -28,7 +32,7 @@ button
 		padding:3px;
 		position:relative;
 	    left:100px; 
-		top:100px;
+	    top:20px;
 		background-color:green;
 		color:white;
 		border-color:green;
@@ -44,6 +48,7 @@ button
 		color:blue;
 		position:relative;
 		left:30px;
+		font-size:20px;
 	}
 	#record
 	{
@@ -70,13 +75,13 @@ button
 	for (Loan amount : loan) 
 	{	
 	%>
-	<label>Loan Id   :</label><p class="out"><%=amount.getLoanId() %></p><br>
-	<label>Borrower Id :</label><p class="out"><%=amount.getBorrowerId() %></p><br>
-	<label>Date    : </label><p class="out"><%=amount.getDate() %></p><br>
-	<label>Total Amount : </label><p class="out"><%=amount.getLoanAmount() %></p><br>
-	<label>Interest :</label><p class="out"><%=amount.getInterest()%>%</p><br>
-	<label>Tenure :</label><p class="out"><%=amount.getTenure() %>Months</p><br>
-	<label>Distribusal Amount :</label><p class="out"><%=amount.getDistribusalAmount()%></p><br>
+	<label><b>Loan Id   : </b></label><p class="out"><%=amount.getLoanId() %></p><br><br>
+	<label><b>Borrower Id : </b></label><p class="out"><%=amount.getBorrowerId() %></p><br><br>
+	<label><b>Date    : </b></label><p class="out"><%=amount.getDate() %></p><br><br>
+	<label><b>Total Amount : </b></label><p class="out"><%=amount.getLoanAmount() %></p><br><br>
+	<label><b>Interest : </b></label><p class="out"><%=amount.getInterest()%>%</p><br><br>
+	<label><b>Tenure : </b></label><p class="out"><%=amount.getTenure() %>Months</p><br><br>
+	<label><b>Distribusal Amount : </b></label><p class="out"><%=amount.getDistribusalAmount()%></p><br><br>
 	<form action="/getLoanDetail" method="post">
 		<input type="hidden" name="id" value="<%=amount.getBorrowerId() %>">
 		<input type="hidden" name="loanId" value="<%=amount.getLoanId() %>">

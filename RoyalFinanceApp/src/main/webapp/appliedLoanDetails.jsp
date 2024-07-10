@@ -19,15 +19,15 @@
 }
 #navbar
 {
-   border: 2px solid #00008B; 
+   border: 2px solid #0077b6; 
    height: 75px;
    width: 100%;
    display: flex;
-   box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
    position: fixed;
    top: 0;
    z-index: 1;
-  background-color: #00008B;
+  background-color: #0077b6;
 } 
 #left_nav
 {
@@ -72,9 +72,8 @@ h1
 }
 th
 {
-	background-color:blue;
+	background-color:#119ce7;
     color: white;
-	opacity:0.7;
 	font-size:20px;
 }
 td
@@ -126,7 +125,7 @@ th, td
 				<a href="getReceipt" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
 			</aside>
 				<aside>
-				<a href="" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
+				<a href="payEMI" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
 			</aside>
 			<aside>
 				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
@@ -183,8 +182,7 @@ th, td
 					alt="Proof" style="width:200px; height:200px;"><br><br>
 					</td>
 					<td><%=borrower.getStatus() %></td>
-				<%-- <td><input type="hidden" name="id" value="<%= loan.getBorrowerId()%>">
-				<a href="updateAppliedDetails.jsp?editId=<%=loan.getBorrowerId()%>"><button class="button">Update</button></a></td> --%>
+
 			
 			<%
 			   }

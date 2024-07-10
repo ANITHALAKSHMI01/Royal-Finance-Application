@@ -27,10 +27,10 @@ public class BorrowerController
 	@PostMapping("/applyLoan")
 	public String applyLoan(@RequestParam("id") String id,@RequestParam("salary") int salary,@RequestParam("amount") int loanAmount,@RequestParam("repayment") int tenure,@RequestParam("city") String city,@RequestParam("state") String state,@RequestParam("pincode") int pincode,@RequestParam("accountNo") long accountNo,@RequestParam("pan") String pan,@RequestParam("paySlip") MultipartFile paySlip,@RequestParam("proof") MultipartFile proof,Model model) throws IOException
 	{
-		if(paySlip!= null && proof!=null || Boolean.FALSE.equals(validation.checkPincode(String.valueOf(pincode),model)) || Boolean.FALSE.equals(validation.checkAccountNo(String.valueOf(accountNo),model)) || Boolean.FALSE.equals(validation.checkPAN(pan,model)) )
+		if(paySlip!= null && proof!=null || Boolean.FALSE.equals(validation.checkPincode(String.valueOf(pincode),model)) || Boolean.FALSE.equals(validation.checkAccountNo(String.valueOf(accountNo),model)) || Boolean.FALSE.equals(validation.checkPAN(pan,model)) || Boolean.FALSE.equals(validation.checkAmount(String.valueOf(salary),String.valueOf(loanAmount),String.valueOf(tenure),model)))
 		{
-			 byte[] slip = paySlip.getBytes();
-			 byte[] proofImage = proof.getBytes();
+			byte[] slip = paySlip.getBytes();
+			byte[] proofImage = proof.getBytes();
 			Borrower borrower=new Borrower();
 			borrower.setBorrowerId(id);
 			borrower.setSalary(salary);
@@ -59,7 +59,7 @@ public class BorrowerController
 	public String appliedLoanDetail(Model model,HttpSession session)
 	{
 		String id=(String) session.getAttribute("id");
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(id,0);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(id);
 		model.addAttribute("borrowers",borrowers);
 		return "appliedLoanDetails.jsp";
 	}

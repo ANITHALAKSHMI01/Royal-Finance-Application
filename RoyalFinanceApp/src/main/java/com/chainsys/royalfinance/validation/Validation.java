@@ -60,6 +60,20 @@ public class Validation
 			return true;
 		}
 	}
+	public boolean checkAmount(String salary,String amount,String tenure,Model model)
+	{
+		String regex="\\d";
+		if(salary.matches(regex) && amount.matches(regex) && tenure.matches(regex))
+		{
+			return false;
+		}
+		else
+		{
+			String errorMessage="Amount or tenure should be numeric.";
+			model.addAttribute("errorPincode",errorMessage);
+			return true;
+		}
+	}
 	public boolean checkPincode(String pincode,Model model)
 	{
 		String regex="^\\d{6}$";

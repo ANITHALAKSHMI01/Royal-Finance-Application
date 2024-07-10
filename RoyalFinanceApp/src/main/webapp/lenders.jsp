@@ -52,18 +52,6 @@
 	top:10px;
 	left:10px;
 }
-button
-	{
-		width:100px;
-		padding:5px;
-		position:relative;
-		left:750px;
-		top:70px;
-		background-color:green;
-		color:white;
-		border-color:green;
-		font-size:20px;
-	}
 h1 
 {
 	text-align:center;
@@ -94,8 +82,8 @@ th, td
 .button
 {
 	padding:8px;
-	background-color:green;
-	border-color:green;
+	background-color:#0077b6;
+	border-color:#0077b6;
 	width:90px;
 	color:white;
 	font-size:15px;
@@ -122,9 +110,13 @@ padding:5px;
 {
 	position:relative;
 	top:90px;
-	left:950px;
+	left:910px;
 	padding:5px;
 	width:100px;
+	background-color:#0077b6;
+	border-color:#0077b6;
+	color:white;
+	font-size:15px;
 }
 </style>
 <body>

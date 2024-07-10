@@ -33,7 +33,7 @@
 		padding:3px;
 		position:relative;
 	    left:100px; 
-		top:20px;
+		/* top:20px; */
 		background-color:green;
 		color:white;
 		border-color:green;
@@ -53,12 +53,12 @@
 		{
 			%>
 	<div>
-	<label>Loan Id   : </label><p class="out"><%=loan.getLoanId()%></p><br><br>
-	<label>Borrower Id : </label><p class="out"><%=loan.getBorrowerId()%></p><br><br>
-	<label>Date    :  </label><p class="out"><%=dateToday%></p><br><br>
-	<label>Account No : </label><p class="out">6754321890765</p><br><br>
-	<label>Borrower Account No : </label><p class="out"><%=loan.getAccountNo()%></p><br><br> 
-	<label> Amount : </label><p class="out"><%=loan.getLoanAmount()%></p><br><br>
+	<label><b>Loan Id   : </b></label><p class="out"><%=loan.getLoanId()%></p><br><br>
+	<label><b>Borrower Id : </b></label><p class="out"><%=loan.getBorrowerId()%></p><br><br>
+	<label><b>Date    :  </b></label><p class="out"><%=dateToday%></p><br><br>
+	<label><b>Acc.No : </b></label><p class="out">6754321890765</p><br><br>
+	<label><b>Borrower Acc.No : </b></label><p class="out"><%=loan.getAccountNo()%></p><br><br> 
+	<label><b> Amount : </b></label><p class="out"><%=loan.getLoanAmount()%></p><br><br>
 	<form action="/payLoan" method="post">
      	<input type="hidden" name="id" value="<%=loan.getBorrowerId()%>">
 		<input type="hidden" name="account" value="<%=loan.getAccountNo()%>"> 

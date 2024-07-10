@@ -84,8 +84,8 @@ th, td
 button
 {
 	padding:5px;
-	background-color:green;
-	border-color:green;
+	background-color:#0077b6;
+	border-color:#0077b6;
 	color:white;
 	fon-size:25px;
 	width:80px;

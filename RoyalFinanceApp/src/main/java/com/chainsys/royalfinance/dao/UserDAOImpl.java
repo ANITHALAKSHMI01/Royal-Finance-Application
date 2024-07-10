@@ -106,15 +106,15 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Borrower> getAllBorrowers() 
 	{
-		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=0 && is_generate=0";
+		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status from borrower_details where is_generate=0";
 		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper());
 		return borrowers;
 	}
 	@Override
-	public List<Borrower> getBorrowerDetail(String id,int isActive)
+	public List<Borrower> getBorrowerDetail(String id)
 	{
-		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where is_active=? && borrower_id=?";
-		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),isActive,id);
+		String select="select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status from borrower_details where borrower_id=?";
+		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),id);
 		return borrowers;
 	}
 	@Override
@@ -127,7 +127,7 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Borrower> searchBorrower(String searchData) 
 	{
-		String search=String.format("select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status,is_active from borrower_details where (application_id like '%%%s%%' or borrower_id like '%%%s%%' or status like '%%%s%%') and is_active=0 and is_generate=0",searchData,searchData,searchData);
+		String search=String.format("select application_id,borrower_id,account_no,pan,salary,city,state,pincode,proof,loan_amount,pay_slip,tenure,status from borrower_details where (application_id like '%%%s%%' or borrower_id like '%%%s%%' or status like '%%%s%%') and is_generate=0",searchData,searchData,searchData);
 		List<Borrower> borrowers=jdbcTemplate.query(search,new BorrowerMapper());
 		return borrowers;
 	}
@@ -141,7 +141,7 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Borrower> getBorrowerByStatus(String status)
 	{
-		String select="select borrower.application_id,borrower.borrower_id,borrower.account_no,borrower.pan,borrower.salary,borrower.city,borrower.state,borrower.pincode,borrower.proof,borrower.loan_amount,borrower.pay_slip,borrower.tenure,borrower.status,borrower.is_active from borrower_details borrower inner join user  on borrower.borrower_id=user.id && borrower.is_active=0 && borrower.status=? && user.active=1";
+		String select="select borrower.application_id,borrower.borrower_id,borrower.account_no,borrower.pan,borrower.salary,borrower.city,borrower.state,borrower.pincode,borrower.proof,borrower.loan_amount,borrower.pay_slip,borrower.tenure,borrower.status from borrower_details borrower inner join user  on borrower.borrower_id=user.id && borrower.status=? && user.active=1";
 		List<Borrower> borrowers=jdbcTemplate.query(select,new BorrowerMapper(),status);
 		return borrowers;
 	}
@@ -161,14 +161,14 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Loan> getApprovedLoan(String id) 
 	{
-		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id && borrower.borrower_id=? && loan.status=?";
-		List<Loan> loan=jdbcTemplate.query(select,new LoanMapper(),id,0);
+		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id && borrower.borrower_id=?";
+		List<Loan> loan=jdbcTemplate.query(select,new LoanMapper(),id);
 		return loan;
 	}
 	@Override
 	public List<Loan> getAllLoans() 
 	{
-		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0";
+		String select="select loan.loan_id,loan.borrower_id,loan.date_issued,loan.interest,loan.distribusal_amount,loan.reduction,borrower.tenure,loan.due_date,loan.is_paid from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id";
 		List<Loan> loan=jdbcTemplate.query(select,new LoanMapper());
 		return loan;
 	}
@@ -178,7 +178,7 @@ public class UserDAOImpl implements UserDAO
 		String search=String.format("select loan.loan_id, loan.borrower_id, loan.date_issued, loan.interest, loan.distribusal_amount, loan.reduction, borrower.tenure, loan.due_date, loan.is_paid " +
                 "from loan_details loan, borrower_details borrower " +
                 "where (loan.borrower_id like '%%%s%%' OR loan.loan_id like '%%%s%%' or loan.is_paid like '%%%s%%') " +
-                "and loan.borrower_id = borrower.borrower_id and loan.status = 0", searchData, searchData, searchData);
+                "and loan.borrower_id = borrower.borrower_id ", searchData, searchData, searchData);
 		List<Loan> loan=jdbcTemplate.query(search,new LoanMapper());
 		return loan;
 	}
@@ -207,7 +207,7 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Loan> getLoanById(String id) 
 	{
-		String select="select loan.date_issued,borrower.loan_amount,borrower.tenure from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0 && loan.borrower_id=?";
+		String select="select loan.date_issued,borrower.loan_amount,borrower.tenure from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id && loan.borrower_id=?";
 	    List<Loan> loan=jdbcTemplate.query(select,new GetLoanByIdMapper(),id);
 	    return loan;
 	}
@@ -227,8 +227,14 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public List<Loan> getEMI(String id,String paymentStatus) 
 	{
-		String select="select loan.loan_id,loan.date_issued,borrower.loan_amount,borrower.tenure,loan.due_date,borrower.account_no from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id &&  loan.status=0 && loan.borrower_id=? && loan.is_paid=?";
+		String select="select loan.loan_id,loan.date_issued,borrower.loan_amount,borrower.tenure,loan.due_date,borrower.account_no from loan_details loan inner join borrower_details borrower on loan.borrower_id=borrower.borrower_id && loan.borrower_id=? && loan.is_paid=?";
 	    return jdbcTemplate.query(select,new EMIMapper(),id,paymentStatus);
+	}
+	@Override
+	public void updatePenalty(int penalty, int loanId) 
+	{
+		String update="update loan_details set penalty=? where loan_id=?";
+		jdbcTemplate.update(update,penalty,loanId);
 	}
 	@Override
 	public int totalRegisteredUsers() 
@@ -251,8 +257,11 @@ public class UserDAOImpl implements UserDAO
 	@Override
 	public int calculateProfit()
 	{
-		String profit="select sum(reduction) from loan_details";
-		return jdbcTemplate.queryForObject(profit,Integer.class);
+		String select="select sum(reduction) from loan_details";
+		int interestAmount=jdbcTemplate.queryForObject(select,Integer.class);
+		String retrive="select sum(penalty) from loan_details";
+		int penaltyAmount=jdbcTemplate.queryForObject(retrive,Integer.class);
+		return interestAmount+penaltyAmount;
 	}
 	@Override
 	public int calculateTotalLoan() 

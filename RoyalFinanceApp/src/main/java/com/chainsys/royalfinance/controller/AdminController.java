@@ -37,14 +37,14 @@ public class AdminController
 	@PostMapping("/viewPaySlip")
 	public String viewPaySlip(@RequestParam("viewId") String id,Model model)
 	{
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(id,0);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(id);
 		model.addAttribute("borrowers",borrowers);
 		return "viewPaySlip.jsp";
 	}
 	@PostMapping("/viewProof")
 	public String viewProof(@RequestParam("viewId") String id,Model model)
 	{
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(id,0);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(id);
 		model.addAttribute("borrowers",borrowers);
 		return "viewProof.jsp";
 	}
@@ -95,7 +95,7 @@ public class AdminController
 		int distribusalAmount=loanAmount-reduction;
 		String paymentStatus="Unpaid";
 		Loan loan=new Loan(borrowerId,dateString,reduction,10,tenure,distribusalAmount,paymentStatus);
-		List<Borrower> borrower=userDAO.getBorrowerDetail(borrowerId,0);
+		List<Borrower> borrower=userDAO.getBorrowerDetail(borrowerId);
 		if(!borrower.isEmpty())
 		{
 			borrower1=borrower.get(0);
@@ -133,7 +133,7 @@ public class AdminController
 	{
 		Borrower borrower=null;
 		List<Loan> list=new ArrayList<>();
-		List<Borrower> borrowers=userDAO.getBorrowerDetail(borrowerId,0);
+		List<Borrower> borrowers=userDAO.getBorrowerDetail(borrowerId);
 		if(!borrowers.isEmpty())
 		{
 			borrower=borrowers.get(0);

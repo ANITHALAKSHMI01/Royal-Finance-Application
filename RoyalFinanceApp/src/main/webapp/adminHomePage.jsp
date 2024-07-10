@@ -88,14 +88,14 @@ main
 }
 .card-front 
 {
-  background-color: orangered;
+  background-color: #188dcd;
   opacity:0.7;
-  color: black;
+  color: white;
   font-size:25px;
 }
 .card-back
  {
-  background-color: green;
+  background-color: #157cb4;
   color: white;
   transform: rotateY(180deg);
 }
@@ -161,7 +161,14 @@ main
 				<% int totalUsers=0;
 				ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 				UserDAOImpl userDAOImpl = (UserDAOImpl) context.getBean("userDAOImpl");
-				totalUsers=userDAOImpl.totalRegisteredUsers();  
+				try
+				{
+					totalUsers=userDAOImpl.totalRegisteredUsers(); 
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				} 
 			    %>
 			<p class="value"><%=totalUsers%></p>
 			</div>
@@ -176,7 +183,14 @@ main
 			</div>
 			<div class="card-back">
 				<% int totalLenders=0;
-				totalLenders=userDAOImpl.totalLenders();
+				try
+				{
+					totalLenders=userDAOImpl.totalLenders();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 				%>
 			<p class="value"><%=totalLenders%></p>
 			</div>
@@ -191,7 +205,15 @@ main
 			</div>
 			<div class="card-back">
 				<%
-				int totalApprovedLenders=userDAOImpl.totalApprovedLenders();
+				int totalApprovedLenders=0;
+				try
+				{
+					totalApprovedLenders=userDAOImpl.totalApprovedLenders();;
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			    %>
 			<p class="value"><%=totalApprovedLenders%></p>
 			</div>
@@ -209,7 +231,15 @@ main
 			<div class="card-back">
 				<% 
 				long accountNo=6754321890765l;
-				int totalBalance=userDAOImpl.getTotalBalance(accountNo);
+				int totalBalance=0;
+				try
+				{
+					totalBalance=userDAOImpl.getTotalBalance(accountNo);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			    %>
 			<p class="value"><%=totalBalance%></p>
 			</div>
@@ -224,7 +254,15 @@ main
 			</div>
 			<div class="card-back">
 				<% 
-				int profit=userDAOImpl.calculateProfit();
+				int profit=0;
+				try
+				{
+					profit=userDAOImpl.calculateProfit();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			    %>
 			<p class="value"><%=profit%></p>
 			</div>
@@ -238,7 +276,16 @@ main
 			<p class="head">Granted loan</p>
 			</div>
 			<div class="card-back">
-				<% int providedLoan=userDAOImpl.calculateTotalLoan();
+				<% 
+				int providedLoan=0;
+				try
+				{
+					providedLoan=userDAOImpl.calculateTotalLoan();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			    %>
 			<p class="value"><%=providedLoan%></p>
 			</div>
