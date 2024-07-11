@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chainsys.royalfinance.model.Borrower;
 import com.chainsys.royalfinance.model.Loan;
+import com.chainsys.royalfinance.model.Payment;
 import com.chainsys.royalfinance.model.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -44,4 +45,6 @@ public interface UserDAO
 	public int totalApprovedLenders();
 	public int calculateProfit();
 	public int calculateTotalLoan();
+	public void addPaymentHistory(Payment payment);
+	public List<Payment> getPaymentHistory(String id);
 }

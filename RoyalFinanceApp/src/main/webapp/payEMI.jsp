@@ -124,6 +124,7 @@
 	 <label><b>Total Amount : </b></label><p class="out" id="penalty"><%= loan.getEmi()+ previousPendingAmount + penaltyAmount %></p><br><br>
 	 <form action="/updatePayment" method="post">
 	     	<input type="hidden" name="id" value="<%=loan.getBorrowerId()%>">
+	     	<input type="hidden" name="date" value="<%=LocalDate.now()%>">
 	     	<input type="hidden" name="loanId" value="<%=loan.getLoanId()%>">
 			<input type="hidden" name="account" value="<%=loan.getAccountNo()%>">
 			<input type="hidden" name="amount" value="<%= loan.getEmi()+ previousPendingAmount + penaltyAmount %>">

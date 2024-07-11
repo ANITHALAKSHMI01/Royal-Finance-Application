@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.chainsys.royalfinance.dao.UserDAO;
 import com.chainsys.royalfinance.model.Borrower;
 import com.chainsys.royalfinance.model.Loan;
+import com.chainsys.royalfinance.model.Payment;
 import com.chainsys.royalfinance.model.User;
 @Controller
 public class AdminController 
@@ -148,9 +149,10 @@ public class AdminController
 		return "payLoan.jsp";
 	}
 	@PostMapping("/payLoan")
-	public String payLoan(@RequestParam("id") String borrowerId,@RequestParam("account") long accountNo,@RequestParam("amount") int amount,Model model)
+	public String payLoan(@RequestParam("id") String borrowerId,@RequestParam("account") long accountNo,@RequestParam("amount") int amount,@RequestParam("date") String date,Model model)
 	{
 		long adminAccountNo=6754321890765l;
+		String adminId="Ani65";
 		userDAO.updateBillStatus(borrowerId);
 		int adminTotalBalance=userDAO.getTotalBalance(adminAccountNo);
 		int borrowerTotalBalance=userDAO.getTotalBalance(accountNo);
@@ -158,6 +160,8 @@ public class AdminController
 		int creditAmount=borrowerTotalBalance+amount;
 		userDAO.updateBalance(adminAccountNo, balance);
 		userDAO.updateBalance(accountNo, creditAmount);
+		Payment payment=new Payment(adminId,date,adminAccountNo,accountNo,amount);
+		userDAO.addPaymentHistory(payment);
 		List<Borrower> borrowers=userDAO.getAllBorrowers();
 		model.addAttribute("borrowers",borrowers);
 		return "lenders.jsp";

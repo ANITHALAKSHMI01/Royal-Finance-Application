@@ -6,36 +6,81 @@
 <meta charset="ISO-8859-1">
 <title>Application</title>
 <style>
-	.button
-	{
-		position:relative;
-		left:190px;
-		bottom:38px;
-		background-color:gray;
-		border-color:gray;
-	}
-    body
+*
+{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+#navbar
+{
+   border: 2px solid #0077b6; 
+   height: 75px;
+   width: 100%;
+   display: flex;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+   position: fixed;
+   top: 0;
+   z-index: 1;
+  background-color: #0077b6;
+} 
+#left_nav
+{
+   width: 30%;
+   height: 100%; 
+}
+#right_nav
+{
+    width: 70%;
+    height: 100%;  
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+    gap: 30px;
+}
+#image1
+{
+	border-radius:50%;
+	width:55px;
+	height:55px;
+	position:relative;
+	top:10px;
+	left:10px;
+}
+.button
+{
+	position:relative;
+	left:190px;
+	bottom:38px;
+	background-color:gray;
+	border-color:gray;
+}
+    body 
     {
-  		background-color:skyblue;
+	background-image: url("images/login.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
     }
 	h1
 	{
 		text-align:center;
 		position:relative;
-		top:50px;
+		top:100px;
 	}
 	div
 	{
-		border:2px solid white;
+		border:2px solid #157cb4;
 		box-shadow:1px 1px 1px 1px;
-		background-color:white;
+		background-color:#157cb4;
 		width:fit-content;
 		height:600px;
 		padding:40px;
 		position:relative;
 		left:400px;
-		top:50px;
+		top:125px;
 		border-radius:10px;
+		color:white;
 	}
 	label
 	{
@@ -45,20 +90,13 @@
 	{
 		position:relative;
 		left:39px;
+		padding:5px;
 	}
-	#purpose
-	{
-		width:210px;
-	}
-/* 	#sal
-	{
-		position:relative;
-		left:85px;
-	} */
 	#loan
 	{
 		position:relative;
 		left:25px;
+		padding:5px;
 	}
 	#city
 	{
@@ -66,44 +104,53 @@
 		padding:8px;
 		position:relative;
 		left:100px;
+		padding:5px;
 	}
 	input
 	{
 		height:20px;
 		width:200px;
-		padding:5px;
 	}
 	button
 	{
 		position:relative;
-		left:60px;
+		top:25px;
+		left:140px;
 		padding:6px;
 		width:100px;
 		font-size:18px;
-		background-color:green;
+		background-color:rgb(88, 171, 199);
 		color:white;
 		border-radius:10px;
-		border-color:green;
+		border-color:rgb(88, 171, 199);
 	}
+	button:hover
+    {
+	  box-shadow: 5px 5px 20px rgb(19, 19, 21);
+    }
 	#state
 	{
 		position:relative;
 		left:95px;
+		padding:5px;
 	}
 	#pin
 	{
 		position:relative;
 		left:72px;
+		padding:5px;
 	}
 	#accNo
 	{
 		position:relative;
 		left:40px;
+		padding:5px;
 	}
 	#pan
 	{
 		position:relative;
 		left:100px;
+		padding:5px;
 	}
 	#pay
 	{
@@ -114,7 +161,6 @@
 	{
 		position:relative;
 		left:90px;
-		padding:5px;
 	}
 </style>
 <script>
@@ -160,6 +206,34 @@
 </script>
 </head>
 <body>
+<nav id="navbar">
+		<section id="left_nav">
+			<img src="images/flogo.jpg" alt="image" id="image1">
+		</section>
+		<section id="right_nav">
+			<aside>
+				<a href="userDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Profile<p></a>
+			</aside>
+			<aside>
+				<a href="allowBorrower" style="color: transparent;"><p style="color:white; font-size:22px;">Apply</p></a>
+			</aside>
+			<aside>
+				<a href="appliedLoanDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Status</p></a>
+			</aside>
+			<aside>
+				<a href="getReceipt" style="color: transparent;"><p style="color:white; font-size:22px;">Invoice</p></a>
+			</aside>
+			<aside>
+				<a href="payEMI" style="color: transparent;"><p style="color:white; font-size:22px;">Pay EMI</p></a>
+			</aside>
+			<aside>
+				<a href="paymentHistory" style="color: transparent;"><p style="color:white; font-size:22px;">Payment History</p></a>
+			</aside>
+			<aside>
+				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
+			</aside>
+		</section>
+	</nav>
     <h1>Application Form</h1>
     <div>
     	<form action="/applyLoan" method="post" enctype="multipart/form-data">
@@ -194,7 +268,7 @@
         <input id="proof" type="file" name="proof"><br><br>
         <button>Apply</button>
     </form>
-    <a href="borrowerHomePage.jsp"><button class="button">Back</button></a>
+    <!-- <a href="borrowerHomePage.jsp"><button class="button">Back</button></a> -->
     </div>
 </body>
 </html>

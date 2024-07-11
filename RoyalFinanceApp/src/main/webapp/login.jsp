@@ -75,7 +75,10 @@ button
 	border-radius: 10px;
 	border-color: rgb(88, 171, 199);
 }
-
+button:hover
+{
+	box-shadow: 5px 5px 20px rgb(19, 19, 21);
+}
 p
 {
 	font-size: 20px;
@@ -107,7 +110,7 @@ p
 	<label for="pass">Password</label>
 	<input id="pass" type="password" placeholder="Password" name="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@!#$%^&*]).{6}$" maxlength=6 required><br><br>
 	<button onclick="validation()">Login</button>
-	<p>Don't have an account?<a  href="userRegistration.jsp" style="text-decoration:none; color:black; font-weight:bold;">Register</a></p>
+	<p>Don't have an account?<a  href="userRegistration.jsp" style="text-decoration:none; color:black; font-weight:bold; padding-left:5px;">Register</a></p>
 </form>
 </div>
 </body>

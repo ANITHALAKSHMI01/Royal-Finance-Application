@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.chainsys.royalfinance.dao.UserDAO;
 import com.chainsys.royalfinance.model.Borrower;
 import com.chainsys.royalfinance.model.Loan;
+import com.chainsys.royalfinance.model.Payment;
 import com.chainsys.royalfinance.model.User;
 import com.chainsys.royalfinance.validation.Validation;
 
@@ -119,7 +120,7 @@ public class BorrowerController
 		return "payEMI.jsp";
 	}
 	@PostMapping("/updatePayment")
-	public String updatePayment(@RequestParam("id") String borrowerId,@RequestParam("loanId") int loanId,@RequestParam("amount") int amount,@RequestParam("account") long accountNo)
+	public String updatePayment(@RequestParam("id") String borrowerId,@RequestParam("loanId") int loanId,@RequestParam("amount") int amount,@RequestParam("account") long accountNo,@RequestParam("date") String date)
 	{
 		long adminAccountNo=6754321890765l;
 		int adminTotalBalance=userDAO.getTotalBalance(adminAccountNo);
@@ -129,6 +130,8 @@ public class BorrowerController
 		userDAO.updateBalance(adminAccountNo, creditAmount);
 		userDAO.updateBalance(accountNo, balance);
 		userDAO.updatePaymentStatus("Paid", loanId);
+		Payment payment=new Payment(borrowerId,date,accountNo,adminAccountNo,amount);
+		userDAO.addPaymentHistory(payment);
 		return "paymentSuccessfull.jsp";
 	}
 }

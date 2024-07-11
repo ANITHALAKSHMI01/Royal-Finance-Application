@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.chainsys.royalfinance.dao.UserDAO;
+import com.chainsys.royalfinance.model.Payment;
 import com.chainsys.royalfinance.model.User;
 import com.chainsys.royalfinance.validation.Validation;
 
@@ -164,6 +165,21 @@ public class UserController
 		List<User> users=userDAO.searchUser(search);
 		model.addAttribute("users",users);
 		return "registeredUsers.jsp";
+	}
+	@GetMapping("/paymentHistory")
+	public String paymentHistory(HttpSession session,Model model)
+	{
+		String id=(String) session.getAttribute("id");
+		List<Payment> payment=userDAO.getPaymentHistory(id);
+		model.addAttribute("payment",payment);
+		if(id.equals("Ani65"))
+		{
+			return "paymentHistory1.jsp";
+		}
+		else
+		{
+			return "paymentHistory.jsp";
+		}
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session)

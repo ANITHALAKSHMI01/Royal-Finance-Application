@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-     <%@ page import="com.chainsys.royalfinance.model.User" %>
-    <%@ page import="java.util.List" %>
-     <%@ page import="java.util.ArrayList" %>
+     <%@page import="java.util.ArrayList"%>
+     <%@page import="com.chainsys.royalfinance.model.Payment"%>
+     <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Registered Users</title>
+<title>Payment History</title>
+</head>
 <style>
 *
 {
@@ -15,9 +16,9 @@
     padding: 0;
     margin: 0;
 }
-body
+ body
 {
-	 overflow-x:hidden;
+overflow-x:hidden;
 }
 #navbar
 {
@@ -54,25 +55,6 @@ body
 	top:10px;
 	left:10px;
 }
-button
-	{
-		width:100px;
-		padding:5px;
-		position:relative;
-		left:550px;
-		top:30px;
-		background-color:green;
-		color:white;
-		border-color:green;
-		font-size:20px;
-	}
-h1 
-{
-	text-align:center;
-	color:#AA336A;
-	position: relative;
-	top:150px;
-}
 th
 {
 	background-color:#119ce7;
@@ -94,24 +76,9 @@ table
 {
 	position: relative;
 	top:180px;
-	left: 150px;
+	left: 250px;
 }
-#button
-{
-	padding:10px;
-	background-color:red;
-	border-color:red;
-	width:80px;
-	color:white;
-	font-size:15px;
-}
-.search
-{
-	position: relative;
-	top:130px;
-	left: 500px;
-}</style>
-</head>
+</style>
 <body>
 <nav id="navbar">
 		<section id="left_nav">
@@ -138,56 +105,54 @@ table
 			</aside>
 		</section>
 	</nav>
-<form action="/searchUser" method="get" class="search">
-	<input type="search" name="searchData" style="padding:8px; width:250px;" placeholder="Search">
-</form>
- <table border="1px" cellspacing="0px">
-	<thead>
+	<table>
+		<thead>
 		<tr>
-	<th>Borrower Id</th>
-	 <th>Name</th>
-	 <th>Date Of Birth</th>
-	 <th>Phone Number</th>
-	 <th>Email Id</th>
-	  <th>Location</th>
-	 <th>Delete</th>
-	   </tr>
-	</thead>
-	<tbody>
-	  <%
-	  List<User> users=(ArrayList<User>)request.getAttribute("users");
-	  if (users != null && !users.isEmpty())
-	  {
-	  	  for(User user: users)
-	  	  {
-	  %>
-	  <tr>
-	  <td> <%=user.getId()%></td>
-	   <td><%=user.getName()%></td>
-	   <td><%=user.getDateOfBirth() %></td>
-	   <td><%=user.getPhoneNo() %></td>
-	   <td><%=user.getEmail() %></td>
-	   <td><%=user.getLocation()%></td>
-	    <td>
-               <form action="/removeUser" method="get">
-                     <input type="hidden" name="deleteId" value="<%=user.getId()%>">
-                     <input type="submit" id="button" name="delete" value="Delete" class="button">
-                </form>
-          </td> 
-	  </tr>
-	   <%
+			<th>Payment Id</th>
+			<th>User Id</th>
+			<th>Payment Date</th>
+			<th>From Account</th>
+			<th>To Account</th>
+			<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+		<%
+			List<Payment> list=(ArrayList<Payment>)request.getAttribute("payment");
+			 if (list != null && !list.isEmpty())
+			  {
+				  try
+				  {
+				  		for (Payment payment : list)
+				  		{%>
+		<tr>
+			<td><%=payment.getPaymentId() %></td>
+			<td><%=payment.getUserId() %></td>
+			<td><%=payment.getDate() %></td>
+			<td><%=payment.getFromAccount() %></td>
+			<td><%=payment.getToAccount() %></td>
+			<td><%=payment.getAmount() %></td>
+		<%
 			   }
+				  		
+				  }
+				  catch (Exception e) 
+				  { 
+						e.printStackTrace();
+				   }
 			  } 
-				else 
-				{
-	        %>
-	        <tr>
-	            <td colspan="15">No Records found</td>
-	        </tr>
-	         <%
-	        }
-	        %>
-	</tbody>
-</table> 
+			else 
+			{
+        %>
+        </tr>
+        <tr>
+            <td colspan="14">No Records found</td>
+        </tr>
+        <%
+        }
+        %>
+				 
+		</tbody>
+	</table>
 </body>
 </html>

@@ -3,16 +3,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import com.chainsys.royalfinance.mapper.BorrowerMapper;
 import com.chainsys.royalfinance.mapper.EMIMapper;
 import com.chainsys.royalfinance.mapper.EmailMapper;
 import com.chainsys.royalfinance.mapper.FindUserIdMapper;
 import com.chainsys.royalfinance.mapper.GetLoanByIdMapper;
 import com.chainsys.royalfinance.mapper.LoanMapper;
+import com.chainsys.royalfinance.mapper.PaymentMapper;
 import com.chainsys.royalfinance.mapper.UserMapper;
 import com.chainsys.royalfinance.model.Borrower;
 import com.chainsys.royalfinance.model.Loan;
+import com.chainsys.royalfinance.model.Payment;
 import com.chainsys.royalfinance.model.User;
 import jakarta.servlet.http.HttpSession;
 @Repository
@@ -27,6 +28,7 @@ public class UserDAOImpl implements UserDAO
 	LoanMapper loanMapper;
 	GetLoanByIdMapper getLoanMapper;
 	EMIMapper emiMapper;
+	PaymentMapper paymentMapper;
 	
 	@Override
 	public void saveUser(User user)
@@ -268,5 +270,18 @@ public class UserDAOImpl implements UserDAO
 	{
 		String totalLoan="select sum(distribusal_amount) from  loan_details";
 		return jdbcTemplate.queryForObject(totalLoan,Integer.class);
+	}
+	@Override
+	public void addPaymentHistory(Payment payment) 
+	{
+		String insert="insert into payment(user_id,payment_date,from_account,to_account,amount)values(?,?,?,?,?)";
+		Object[] params= {payment.getUserId(),payment.getDate(),payment.getFromAccount(),payment.getToAccount(),payment.getAmount()};
+		jdbcTemplate.update(insert, params);
+	}
+	@Override
+	public List<Payment> getPaymentHistory(String id) 
+	{
+		String select="select payment_id,user_id,payment_date,from_account,to_account,amount from payment where user_id=?";
+		return jdbcTemplate.query(select,new PaymentMapper(),id);
 	}
 }
