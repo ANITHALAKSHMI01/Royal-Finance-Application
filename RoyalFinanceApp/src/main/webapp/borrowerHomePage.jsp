@@ -5,6 +5,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Borrower Home</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <style>
 *
@@ -39,7 +42,8 @@ overflow-x:hidden;
     width: 70%;
     height: 100%;  
     display: flex;
-    justify-content: flex-end;
+    position:relative;
+	left:130px;
     align-items: center; 
     gap: 30px;
 }
@@ -72,11 +76,20 @@ h1
 {
 	font-size:25px;
 }
+h4
+{
+	color:white;
+	position:relative;
+	left:100px;
+	bottom:40px;
+	font-size:25px;
+}
 </style>
 <body>
 <nav id="navbar">
 		<section id="left_nav">
 			<img src="images/flogo.jpg" alt="image" id="image1">
+			<h4>Royal Finance</h4>
 		</section>
 		<section id="right_nav">
 			<aside>

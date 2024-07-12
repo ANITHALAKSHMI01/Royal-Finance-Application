@@ -60,7 +60,7 @@
 	<label><b> Amount : </b></label><p class="out"><%=loan.getLoanAmount()%></p><br><br>
 	<form action="/payLoan" method="post">
      	<input type="hidden" name="id" value="<%=loan.getBorrowerId()%>">
-     	<input type="hidden" name="date" value="<%=dateToday%>s">
+     	<input type="hidden" name="date" value="<%=dateToday%>">
 		<input type="hidden" name="account" value="<%=loan.getAccountNo()%>"> 
 		<input type="hidden" name="amount" value="<%=loan.getLoanAmount()%>">
 		<button>Pay</button>

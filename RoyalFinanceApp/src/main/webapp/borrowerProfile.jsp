@@ -91,11 +91,20 @@
 		left:120px;
 		bottom:35px;
 	}
+	h4
+   {
+	 color:white;
+	 position:relative;
+	 left:100px;
+	 bottom:40px;
+	 font-size:25px;
+   }
 </style>
 <body>
 <nav id="navbar">
 		<section id="left_nav">
 			<img src="images/flogo.jpg" alt="image" id="image1">
+			<h4>Royal Finance</h4>
 		</section>
 		<section id="right_nav">
 			<aside>

@@ -1,6 +1,7 @@
 package com.chainsys.royalfinance.dao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.chainsys.royalfinance.mapper.BorrowerMapper;
@@ -75,6 +76,19 @@ public class UserDAOImpl implements UserDAO
 		String update="update user set phone_no=?,location=? where id=?";
 		Object[] params= {phoneNo,location,id};
 		jdbcTemplate.update(update,params);
+	}
+	@Override
+	public boolean getEmail(String email) 
+	{
+		String select="select email from user where email=? && status=0 ";
+		try
+		{
+			return jdbcTemplate.queryForObject(select, String.class,email)!=null;
+		}
+		catch(EmptyResultDataAccessException e)
+		{
+			return false;
+		}
 	}
 	@Override
 	public List<User> checkUserDetails(String email) 

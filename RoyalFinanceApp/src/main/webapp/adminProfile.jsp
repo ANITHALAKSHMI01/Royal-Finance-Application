@@ -8,6 +8,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>User Profile</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <style>
 *
@@ -38,7 +41,8 @@
     width: 70%;
     height: 100%;  
     display: flex;
-    justify-content: flex-end; 
+    position:relative;
+	left:130px;
     align-items: center; 
     gap: 30px;
     margin-right:25px;
@@ -56,7 +60,7 @@
 	{
 		border:2px solid #D3D3D3;
 		width:fit-content;
-		height:340px;
+		height:330px;
 		padding:30px;
 		position:relative;
 		left:450px;
@@ -72,7 +76,6 @@
 	{
 		display:inline;
 		font-size:20px;
-		/* color:white; */
 		position:relative;
 		left:20px;
 	}
@@ -85,23 +88,56 @@
 		border-radius:10px;
 		border-color:#0077b6;
 		font-size:20px;
+		position:relative;
+		left:20px;
 	}
 	.but1
 	{
 		position:relative;
-		left:120px;
-		bottom:35px;
+		left:150px;
+		bottom:45px;
 	}
+	h4
+   {
+	 color:white;
+	 position:relative;
+	 left:100px;
+	 bottom:40px;
+	 font-size:25px;
+   }
+   .dropdown-menu 
+{
+    background-color: #F5F5F5;
+    border: none;
+    height:90px;
+}
+.dropdown-item:hover 
+{
+    background-color: #E8E5D7;
+    border-radius: 12px; 
+}
+.dropdown:hover .dropdown-menu 
+{
+
+   display: block;
+   margin-top: 0;
+}
+i
+{
+	position:relative;
+	left:10px; 
+	font-size:25px;
+	color:white;
+}
 </style>
 <body>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <nav id="navbar">
 		<section id="left_nav">
 			<img src="images/flogo.jpg" alt="image" id="image1">
+			<h4>Royal Finance</h4>
 		</section>
 		<section id="right_nav">
-			<aside>
-				<a href="userDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Profile<p></a>
-			</aside>
 			<aside>
 				<a href="listAllUsers" style="color: transparent;"><p style="color:white; font-size:22px;">Registered Borrowers</p></a>
 			</aside>
@@ -115,7 +151,13 @@
 				<a href="paymentHistory" style="color: transparent;"><p style="color:white; font-size:22px;">Payment History</p></a>
 			</aside>
 			<aside>
-				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
+			     <li class="nav-item dropdown" id ="profile" type="none">
+                <i class="fa-regular fa-user"></i>
+                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="userDetail">Profile</a>
+                     <a class="dropdown-item" href="logout">Logout</a>
+                    </div>
+                 </li>
 			</aside>
 		</section>
 	</nav>
@@ -127,12 +169,12 @@
  	  for(User user: userDetail)
  	  {
  %>
-<label><b>Admin Id : </b></label><p><%= user.getId()%></p><br><br>
-<label><b>Name   :   </b></label><p> <%= user.getName()%></p><br><br>
-<label><b>Date Of Birth : </b></label><p> <%= user.getDateOfBirth() %></p><br><br>
-<label><b>Phone Number : </b></label> <p> <%= user.getPhoneNo() %></p><br><br>
-<label><b>Email Id : </b></label><p><%= user.getEmail() %></p><br><br>
-<label><b>Location : </b></label><p><%= user.getLocation()%></p><br><br>
+<label><b>Admin Id : </b></label><p><%= user.getId()%></p><br>
+<label><b>Name   :   </b></label><p> <%= user.getName()%></p><br>
+<label><b>Date Of Birth : </b></label><p> <%= user.getDateOfBirth() %></p><br>
+<label><b>Phone Number : </b></label> <p> <%= user.getPhoneNo() %></p><br>
+<label><b>Email Id : </b></label><p><%= user.getEmail() %></p><br>
+<label><b>Location : </b></label><p><%= user.getLocation()%></p><br>
 <form action="updateUser.jsp">
 <input type="hidden" name="id" value="<%= user.getId() %>">
 <input type="hidden" name="name" value="<%= user.getName() %>">

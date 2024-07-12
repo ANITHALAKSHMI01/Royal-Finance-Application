@@ -9,6 +9,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Lenders</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <style>
 <style>
@@ -40,7 +43,8 @@
     width: 70%;
     height: 100%;  
     display: flex;
-    justify-content: flex-end;
+    position:relative;
+	left:130px;
     align-items: center; 
     gap: 30px;
 }
@@ -150,16 +154,46 @@ th, td
 	top:140px; 
 	padding:5px;
 }
+h4
+{
+	color:white;
+	position:relative;
+	left:100px;
+	bottom:40px;
+	font-size:25px;
+}
+.dropdown-menu 
+{
+    background-color: #F5F5F5;
+    border: none;
+}
+.dropdown-item:hover 
+{
+    background-color: #E8E5D7;
+    border-radius: 12px; 
+}
+.dropdown:hover .dropdown-menu 
+{
+
+   display: block;
+   margin-top: 0;
+}
+i
+{
+	position:relative;
+	bottom:5px;
+	font-size:25px;
+	color:white;
+}
 </style>
 <body>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <nav id="navbar">
 		<section id="left_nav">
 			<img src="images/flogo.jpg" alt="image" id="image1">
+			<h4>Royal Finance</h4>
 		</section>
 		<section id="right_nav">
-			<aside>
-				<a href="userDetail" style="color: transparent;"><p style="color:white; font-size:22px;">Profile<p></a>
-			</aside>
 				<aside>
 				<a href="listAllUsers" style="color: transparent;"><p style="color:white; font-size:22px;">Registered Borrowers</p></a>
 			</aside>
@@ -173,7 +207,13 @@ th, td
 				<a href="paymentHistory" style="color: transparent;"><p style="color:white; font-size:22px;">Payment History</p></a>
 			</aside>
 			<aside>
-				<a href="logout" style="color: transparent;"><p style="color:white; font-size:22px;">Logout</p></a>
+			     <li class="nav-item dropdown" id ="profile" type="none">
+                <i class="fa-regular fa-user"></i>
+                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="userDetail">Profile</a>
+                     <a class="dropdown-item" href="logout">Logout</a>
+                    </div>
+                 </li>
 			</aside>
 		</section>
 	</nav>

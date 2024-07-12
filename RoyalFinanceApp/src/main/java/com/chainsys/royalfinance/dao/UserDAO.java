@@ -17,6 +17,7 @@ public interface UserDAO
 	public String getId(HttpSession session);
 	public List<User> getUserDetail(String id);
 	public void updateUser(String id,long phoneNo,String location);
+	public boolean getEmail(String email);
 	public List<User> checkUserDetails(String email);
 	public List<User> searchUser(String searchData);
 	public void addAccount(long accountNo,int amount,String id);
