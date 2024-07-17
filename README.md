@@ -1,4 +1,4 @@
-# <a href="" target="_blank">Absence Tracking System</a> 
+# <a href="" target="_blank">Royal Finance Application</a> 
 - A Java Web Developement Project
 -  A Java Web Developement Project
 - Admin
