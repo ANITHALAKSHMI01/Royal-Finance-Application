@@ -13,7 +13,6 @@
     <span>&#9745;</span> View and maintaining records.<br>
     <span>&#9745;</span> Admin approve the borrower.<br>
     <span>&#9745;</span> Admin provide loan.<br>
-    <br>
     <span style="color:red">**Borrower**</span><br>
     <span>&#9745;</span> Apply Loan.<br>
     <span>&#9745;</span> View status and invoice.<br>
@@ -64,8 +63,8 @@
     
     
     ### =================Royal Finance Application Features  =================
-    <span style="color:blue">**User Authentication  :**</span><br>
-    Users should be able to create accounts and Login by using credentials like email and password.After that It will redirect respective users dashboard.
+    <span style="color:blue">**User Authentication and Bcrption:**</span><br>
+    Users should be able to create accounts with the help of Bcrption and Login by using credentials like email and password.After that It will redirect respective users dashboard.
     <br>
     <span style="color:blue">**Online Loan Application Form :**</span><br>
     Borrower can apply loan through online application form by providing required information and they can view the applied status .<br>
