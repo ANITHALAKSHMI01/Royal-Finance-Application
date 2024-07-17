@@ -70,7 +70,7 @@
        Users should be able to create accounts using bcrption and Login by using credentials like email and password.After that It will redirect respective users dashboard.<br>
 <span style="color:blue">**Online Loan Application Form :**</span><br>
       Borrower can apply loan through online application form by providing required information and they can view the applied status .<br>
-<span style="color:blue">**Admin Approval and Provide Loan: **</span><br>
+<span style="color:blue">**Admin Approval and Provide Loan :**</span><br>
      Admin can view seperately registered users and those who are all applied for loan.He will give the loan to borrower based on eligiblity and provide loan only for approved borrowers.<br>
 <span style="color:blue">**Update EMI:**</span><br>
       Admin can update the every month EMI with duedate.Incase of late in payment after the duedate ,It will calculate the penalty for respective borrower automatically.
